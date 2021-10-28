@@ -32,6 +32,9 @@ public class Product {
     @SerializedName("updatedAt")
     private SimpleDateFormat updatedAt;
 
+    public String getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -47,6 +50,22 @@ public class Product {
 
     public String getImage() {
         return image;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public Boolean getTest() {
+        return test;
+    }
+
+    public SimpleDateFormat getCreatedAt() {
+        return createdAt;
+    }
+
+    public SimpleDateFormat getUpdatedAt() {
+        return updatedAt;
     }
 
     public void setId(String id) {

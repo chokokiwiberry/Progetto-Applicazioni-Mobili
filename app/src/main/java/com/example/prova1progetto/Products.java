@@ -82,7 +82,7 @@ public class Products  extends AppCompatActivity {
                 public void onResponse(Call<Product> call, Response<Product> response) {
                     Log.d("cibo", "prima dell if");
                     Log.d("cibo", "sono la befana "+ response.code());
-                    Log.d("cibo", "nanananananann "+ response);
+                    Log.d("cibo", "nanananananann "+ response.body());
                     if (!response.isSuccessful()) {
                         textViewResult.setText("Code: " + response.code());
                     }
