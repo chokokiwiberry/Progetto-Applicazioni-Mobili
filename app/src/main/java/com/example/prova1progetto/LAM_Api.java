@@ -21,7 +21,7 @@ public interface LAM_Api {
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("products")
-    Call<Product> getProducts(@Header("Authorization") String auth, @Query("barcode") String barcode);
+    Call<ListProducts> getProducts(@Header("Authorization") String auth, @Query("barcode") String barcode);
 
     @Headers("Content-Type: application/json")
     @POST("auth/login") //faccio una post del tipo user - dato che ho definito, decidere come trattare il campo email

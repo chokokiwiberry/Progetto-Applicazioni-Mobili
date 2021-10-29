@@ -4,9 +4,11 @@ package com.example.prova1progetto;
 import com.google.gson.annotations.SerializedName;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class Product {
+
 
     @SerializedName("id")
     private String id; // non so se tenerla o meno
@@ -28,9 +30,9 @@ public class Product {
     @SerializedName("test")
     private Boolean test; //se il prodotto è in test è true, altrimenti false
     @SerializedName("createdAt")
-    private SimpleDateFormat createdAt;
+    private Date createdAt;
     @SerializedName("updatedAt")
-    private SimpleDateFormat updatedAt;
+    private Date updatedAt;
 
     public String getId() {
         return id;
@@ -60,11 +62,11 @@ public class Product {
         return test;
     }
 
-    public SimpleDateFormat getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public SimpleDateFormat getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
@@ -96,11 +98,9 @@ public class Product {
         this.test = test;
     }
 
-    public void setCreatedAt(SimpleDateFormat createdAt) {
-        this.createdAt = createdAt;
-    }
+    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
 
-    public void setUpdatedAt(SimpleDateFormat updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 }
