@@ -26,7 +26,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Login extends AppCompatActivity  {
+public class Login extends AppCompatActivity {
     private static final Object LOG_TAG = "";
     Button loginbutton;
     EditText emailtext, passwordtext;
@@ -39,13 +39,14 @@ public class Login extends AppCompatActivity  {
     SharedPreferences sharedPreferences;
 
     private LAM_Api lam_api;
-    public void onCreate(@Nullable Bundle savedInstanceState){
+
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        emailtext = (EditText)findViewById(R.id.id_email);
-        passwordtext = (EditText)findViewById(R.id.id_password);
-        loginbutton = (Button)findViewById(R.id.id_login);
+        emailtext = (EditText) findViewById(R.id.id_email);
+        passwordtext = (EditText) findViewById(R.id.id_password);
+        loginbutton = (Button) findViewById(R.id.id_login);
 
         sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 
@@ -55,16 +56,15 @@ public class Login extends AppCompatActivity  {
                 .build();
         lam_api = retrofit.create(LAM_Api.class);
 
-        loginbutton.setOnClickListener(v->{
+        loginbutton.setOnClickListener(v -> {
             String token = "";
             token = Login();
-            Log.d("cibo", "sono token dopo login "+ token);
-            if (token!=""){ //tecnicamente deve controllare il vecchio token quindi fare l'accesso al db
+            if (token != "") { //tecnicamente deve controllare il vecchio token quindi fare l'accesso al db
                 // lo faccio entrare
                 //riceverà un token e se il token è scaduto, lo butto fuori e gli rifaccio fare il login
                 //altrimenti entra dentro
                 //dato che bisogna sempre controllare il token, glielo passo nella componente
-                Log.d("cibo", "sono in login activity e sto provando a passare token " + token);
+
                 Intent Pantry = new Intent(this, Pantry.class);
                 Pantry.putExtra("token", token);
                 startActivity(Pantry);
@@ -77,7 +77,7 @@ public class Login extends AppCompatActivity  {
     }
 
     private String Login() {
-       this.userlogged = new User(this.emailtext.getText().toString(), this.passwordtext.getText().toString());
+        this.userlogged = new User(this.emailtext.getText().toString(), this.passwordtext.getText().toString());
         try {
             Map<String, String> postData = new HashMap<>();
             postData.put("email", this.emailtext.getText().toString());
@@ -91,7 +91,7 @@ public class Login extends AppCompatActivity  {
                         textviewResult.setText("prova response" + response.code());
                         return;
                     }
-                    if (response.code() == 401){
+                    if (response.code() == 401) {
                         //rifare il login
                     }
 
@@ -104,24 +104,19 @@ public class Login extends AppCompatActivity  {
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    Log.d("sole", "sono faillitooooooo zam zam zam");
                     textviewResult.setText(t.getMessage());
                 }
 
             });
-            Log.d("sole", "sono alla fineeeee");
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.d("cibo", "sono alla fine di login function call api" + userlogged.getToken());
 
-
-        SharedPreferences sharedPreferences =getSharedPreferences
-                (PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         String myData = sharedPreferences.getString(MY_KEY, "");
-        Log.d("cibo", "sto provando con sharedpreference"+ myData);
+
         return myData;
     }
 }

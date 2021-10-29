@@ -35,41 +35,32 @@ public class Pantry extends AppCompatActivity {
     Button checkPantry; //button per vedere cosa hai dentro al pantry
 
     private String passed_Token = "";
-  //  private LamApi2021 lamapi2021;
-    private String received_token ="";
+
+    private String received_token = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantry);
-        
+
         barcode_input = (EditText) findViewById(R.id.id_insertbarcode);
 
         getButton = findViewById(R.id.id_getproducts);
 
 
-
-        getButton.setOnClickListener(v->{
+        getButton.setOnClickListener(v -> {
             Bundle extras = getIntent().getExtras();
-            if (extras!=null) {
+            if (extras != null) {
                 received_token = extras.getString("token");
-                Log.d("cibo", "sono stato ricevuto dal login?"+  received_token);
-
             }
-            Log.d("cibo", "sono cliccato gettt");
 
             barcode = barcode_input.getText().toString();
-            Log.d(TAG, "prova " +barcode);
-           
 
             Intent Products = new Intent(this, Products.class);
             Products.putExtra("barcode", barcode);
-            Products.putExtra( "token", received_token);//per poter inviare questi dati all'altra activity
+            Products.putExtra("token", received_token);//per poter inviare questi dati all'altra activity
             startActivity(Products);
-
         });
-
-
 
 
         //button per vedere che cosa hai all'interno del proprio pantry

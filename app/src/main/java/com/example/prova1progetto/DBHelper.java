@@ -21,19 +21,19 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase DB, int oldVersion, int newVersion) {
         DB.execSQL("drop Table if exists Users");
     }
-    public Boolean insertuserdata(String email, String password, String token)
-    {
+
+    public Boolean insertuserdata(String email, String password, String token) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("email", email);
         contentValues.put("password", password);
         contentValues.put("token", token);
-        long result=DB.insert("Users", null, contentValues);
-        if(result==-1){
+        long result = DB.insert("Users", null, contentValues);
+        if (result == -1) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
-  //fare la funzione per poter eventualmente aggiornare il database
+    //fare la funzione per poter eventualmente aggiornare il database
 }

@@ -98,7 +98,7 @@ public class Product {
         this.test = test;
     }
 
-    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+    public void setCreatedAt(Date createdAt) {this.createdAt = createdAt; }
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
