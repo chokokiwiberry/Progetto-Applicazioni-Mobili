@@ -1,7 +1,10 @@
 package com.example.prova1progetto;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -23,11 +26,15 @@ public class Products extends AppCompatActivity {
 
     private TextView textViewResult;
 
+    private Button addproduct;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listofproducts);
         textViewResult = findViewById(R.id.text_view_result);
+        textViewResult.setMovementMethod(new ScrollingMovementMethod());
+        addproduct = findViewById(R.id.id_addproduct);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -42,6 +49,12 @@ public class Products extends AppCompatActivity {
 
         lam_api = retrofit.create(LAM_Api.class);
         getProducts(passed_Barcode);
+
+        addproduct.setOnClickListener(v -> {
+            Intent createProduct = new Intent(this, CreateProduct.class);
+            startActivity(createProduct);
+
+        });
 
     }
 
