@@ -86,7 +86,7 @@ public class Products<gson> extends AppCompatActivity {
 
     private void getProducts(String barcode) {
         Log.d("cibo", "sono dentro");
-        ArrayList<Object> dataArrayList = new ArrayList<>();
+
 
         try {
             Log.d("cibo", "mah chi gli passo tryyyyyyy?" + barcode);
@@ -99,33 +99,21 @@ public class Products<gson> extends AppCompatActivity {
                     Log.d("cibo", "prima dell if");
                     Log.d("cibo", "sono la befana "+ response.code());
                     Log.d("cibo", "nanananananann "+ response.body().getProducts().get(0));
-                    Product tmp = response.body();
-                    Log.d("cibo", "sono tmp var assegnata "+ tmp);
+
                     if (!response.isSuccessful()) {
                         textViewResult.setText("Code: " + response.code());
+                    }
+                    else{
+                        for (int i=0; i<response.body().getProducts().size(); i++){
+                            Log.d("cibo", "nuvola "+response.body().getProducts().get(i).getName());
+                        }
                     }
 
 
 
-                  /*  try {
-                        JSONObject jsonObject = new JSONObject(new Gson().toJson(response.body()));
-                        Log.d("cibo", "sono jsonobj " +jsonObject );
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } */
-                    Log.d("cibo", "scopriremo la verità conan");
-
-                 //   List<Product> products = response.body();
                //     Log.d("cibo", products.toString());
 
-                /*for (Product prod: products){
-                    String content = "";
-                    content += "ID: " + prod.getBarcode() + "\n";
-                    content += "Name: " + prod.getName() + "\n";
-                    content += "Description: " + prod.getDescription() + "\n\n";
 
-                    textViewResult.append(content);
-                } */
                 }
 
                 @Override
