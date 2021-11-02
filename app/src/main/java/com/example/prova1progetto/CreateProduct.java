@@ -1,19 +1,13 @@
 package com.example.prova1progetto;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
+
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Switch;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,9 +19,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CreateProduct  extends AppCompatActivity {
-    private static final int REQUEST_IMAGE_CAPTURE = 0;
-    private static final int MY_CAMERA_REQUEST_CODE = 100;
+public class CreateProduct extends AppCompatActivity {
+
     private Button savebutton;
     private EditText nametext;
     private EditText descriptiontext;
@@ -38,32 +31,6 @@ public class CreateProduct  extends AppCompatActivity {
     private Button takephoto;
     private LAM_Api lam_api;
 
-    static final int REQUEST_TAKE_PHOTO = 123;
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            // Sample data cast to  thumbnail
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            // Do whatever you want with the thumbnail such as setting it to image view
-            ImageView mImageView = null;
-            mImageView.setImageBitmap(imageBitmap);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == MY_CAMERA_REQUEST_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,11 +57,15 @@ public class CreateProduct  extends AppCompatActivity {
         savebutton.setOnClickListener(v -> {
             saveProduct();
         });
-
         takephoto.setOnClickListener(v -> {
             takePhoto();
         });
+
+
+
     }
+
+
 
     private void saveProduct() {
 
@@ -133,12 +104,7 @@ public class CreateProduct  extends AppCompatActivity {
     }
 
     private void takePhoto() {
-        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
-        }
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-        }
+
+
     }
 }
