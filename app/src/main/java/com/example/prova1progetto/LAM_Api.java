@@ -40,5 +40,13 @@ public interface LAM_Api {
     @POST("products")
     Call<Product> postProduct(@Header("Authorization") String auth, @Body HashMap<String, Object> body);
 
-
+    @FormUrlEncoded
+    @POST("products")
+    Call<Product> postProduct1(
+            @Field("token") String token,
+            @Field("name") String name,
+            @Field("description") String description,
+            @Field("barcode") String barcode,
+            @Field("test") Boolean test
+    );
 }

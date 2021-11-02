@@ -61,7 +61,8 @@ public class CreateProduct  extends AppCompatActivity {
             postData.put("name", this.nametext.getText().toString());
             postData.put("description", this.descriptiontext.getText().toString());
             postData.put("barcode", received_barcode);
-            postData.put("test", String.valueOf(testswitch.isChecked()));
+            postData.put("test", testswitch.isChecked());
+            Log.d("diamond", "sto per essere impachettato: "+postData);
             Call<Product> call = lam_api.postProduct("Bearer " + received_token, postData);
             call.enqueue(new Callback<Product>() {
                 @Override
