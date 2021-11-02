@@ -38,6 +38,15 @@
         android:hint="Barcode da inserire di nuovo?"
         android:inputType="text"
       />
+        <Button
+            android:id = "@+id/id_takephoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text ="Take a picture"
+            android:drawableLeft="@drawable/ic_baseline_camera_alt_24"
+
+
+        />
 
     <Button
         android:id="@+id/id_saveproduct"
