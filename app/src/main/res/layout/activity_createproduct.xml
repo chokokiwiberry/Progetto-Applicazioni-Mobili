@@ -5,11 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
     <EditText
         android:id="@+id/id_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Product's name"
@@ -20,9 +23,8 @@
 
     <EditText
         android:id="@+id/id_description"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="340dp"
         android:ems="10"
         android:hint="Insert description"
         android:inputType="text"
@@ -31,30 +33,25 @@
 
     <EditText
         android:id="@+id/id_barcode"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="292dp"
-        android:ems="10"
         android:hint="Barcode da inserire di nuovo?"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/id_saveproduct"
-        tools:layout_editor_absoluteX="0dp" />
+      />
 
     <Button
         android:id="@+id/id_saveproduct"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.629"
-        tools:layout_editor_absoluteX="16dp" />
+
+       />
 
     <Switch
         android:id="@+id/id_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="240dp"
+        android:layout_marginBottom="124dp"
         android:text="Test"
         app:layout_constraintBottom_toTopOf="@+id/id_saveproduct"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,5 +59,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_email"
         app:layout_constraintVertical_bias="0.321" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

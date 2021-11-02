@@ -1,6 +1,7 @@
 package com.example.prova1progetto;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -33,4 +34,11 @@ public interface LAM_Api {
             @Field("username") String username,
             @Field("password") String password
     );
+
+
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("products")
+    Call<Product> postProduct(@Header("Authorization") String auth, @Body HashMap<String, Object> body);
+
+
 }

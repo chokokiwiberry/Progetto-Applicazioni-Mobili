@@ -96,7 +96,7 @@ public class Login extends AppCompatActivity {
                     }
 
                     userlogged.setToken(response.body().getToken());
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
                     editor.putString(MY_KEY, response.body().getToken());
                     editor.apply();
                     Log.d("cibo", userlogged.getToken());
