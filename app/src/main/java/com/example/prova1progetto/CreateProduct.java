@@ -1,15 +1,22 @@
 package com.example.prova1progetto;
 
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.HashMap;
 
@@ -30,7 +37,7 @@ public class CreateProduct extends AppCompatActivity {
     private String received_barcode;
     private Button takephoto;
     private LAM_Api lam_api;
-
+    private static final int MY_CAMERA_REQUEST_CODE = 100;
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +65,11 @@ public class CreateProduct extends AppCompatActivity {
             saveProduct();
         });
         takephoto.setOnClickListener(v -> {
-            takePhoto();
+            askPermission();
         });
 
 
-
     }
-
 
 
     private void saveProduct() {
@@ -103,8 +108,33 @@ public class CreateProduct extends AppCompatActivity {
 
     }
 
-    private void takePhoto() {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 5) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                takePhotoFromCamera();
+            }
 
+        }
+    }
+
+
+    private void takePhotoFromCamera() {
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        if (intent.resolveActivity(getPackageManager()) != null)
+            startActivity(intent);
+    }
+
+    private void askPermission() {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_DENIED) {
+            Toast.makeText(this, "Boh perché", Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 5);
+        } else {
+            Toast.makeText(this, "else voglio vedere cos'è ", Toast.LENGTH_SHORT).show();
+            takePhotoFromCamera();
+        }
 
     }
 }
