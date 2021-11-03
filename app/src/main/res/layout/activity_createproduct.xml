@@ -47,6 +47,12 @@
 
 
         />
+        <Button
+            android:id = "@+id/id_savepic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text ="Prova salva picture"
+        />
 
     <Button
         android:id="@+id/id_saveproduct"
@@ -68,6 +74,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_email"
         app:layout_constraintVertical_bias="0.321" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/id_imageview"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

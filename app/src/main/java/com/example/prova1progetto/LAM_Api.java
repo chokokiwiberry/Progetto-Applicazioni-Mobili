@@ -38,7 +38,7 @@ public interface LAM_Api {
 
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("products")
-    Call<Product> postProduct(@Header("Authorization") String auth, @Body HashMap<String, Object> body);
+    Call<Product> postProduct(@Header("Authorization") String auth, @Body Map<String, Object> body);
 
     @FormUrlEncoded
     @POST("products")
