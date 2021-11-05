@@ -67,9 +67,8 @@ public class CreateProduct extends AppCompatActivity {
     ActivityResultLauncher<String> getGalleryContent;
     ActivityResultLauncher<Intent> launchCamera;
 
-    String encodedImage;
+    String encodedImage = null;
 
-    String uriEncodedImage;
 
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,7 +122,7 @@ public class CreateProduct extends AppCompatActivity {
                     final Uri imageUri = result;
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                     final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                    uriEncodedImage = encodeImage(selectedImage);
+                    encodedImage = encodeImage(selectedImage);
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -159,6 +158,9 @@ public class CreateProduct extends AppCompatActivity {
             postData.put("barcode", received_barcode); //credo che non farò inserire il barcode dall'utente - che venga letto da camera o meno
             postData.put("test", testswitch.isChecked()); //quando ci sarà la versione finale, questo sarà sempre di default falso
             Log.d("diamond", "sto per essere impachettato: " + postData);
+            if (encodedImage != null){
+                postData.put("img", encodedImage);
+            }
             Call<Product> call = lam_api.postProduct("Bearer " + received_token, postData);
             call.enqueue(new Callback<Product>() {
                 @Override

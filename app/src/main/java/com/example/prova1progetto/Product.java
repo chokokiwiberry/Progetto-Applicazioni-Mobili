@@ -6,9 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
+//POJO
 public class Product {
-
 
     @SerializedName("id")
     private String id; // non so se tenerla o meno

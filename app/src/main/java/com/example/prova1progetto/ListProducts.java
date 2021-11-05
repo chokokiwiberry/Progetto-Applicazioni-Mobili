@@ -6,8 +6,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//POJO
 public class ListProducts extends Product {
+
     @SerializedName("token")
     private String token;
 

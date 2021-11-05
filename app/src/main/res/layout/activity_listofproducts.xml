@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layoutlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
@@ -24,7 +21,10 @@
         android:scrollbars="vertical"
         android:textColor="@color/black"
         android:layout_centerVertical="true"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="76dp"></TextView>
-    </RelativeLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+      ></TextView>
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

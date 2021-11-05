@@ -6,12 +6,22 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import org.w3c.dom.Text;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +46,16 @@ public class Products extends AppCompatActivity {
     String MY_KEY1 = "";
     SharedPreferences sharedPreferences1;
 
+
+    private RelativeLayout layout;
+
+    private ListView listview;
+    private ListProducts tmp;
+
+
+
+    ProductView productview = new ProductView(Products.this);
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +63,11 @@ public class Products extends AppCompatActivity {
         textViewResult = findViewById(R.id.text_view_result);
         textViewResult.setMovementMethod(new ScrollingMovementMethod());
         addproduct = findViewById(R.id.id_addproduct);
+        listview = findViewById(R.id.listview);
+
+        layout = findViewById(R.id.layoutlist);
+
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -57,10 +82,6 @@ public class Products extends AppCompatActivity {
 
         lam_api = retrofit.create(LAM_Api.class);
         getProducts(passed_Barcode);
-
-
-
-
 
         //Log.d("cibo", "sono sessionToken " +  sessionToken);
 
@@ -86,18 +107,11 @@ public class Products extends AppCompatActivity {
                     if (!response.isSuccessful()) {
                         textViewResult.setText("Code: " + response.code());
                     }
-                    for (int i = 0; i < response.body().getProducts().size(); i++) {
-                        Log.d("cibo", "nuvola " + response.body().getProducts().get(i).getName());
 
-                        String content = "";
-                        content += response.body().getProducts().get(i).getBarcode() + "\n";
-                        content += response.body().getProducts().get(i).getName() + "\n";
-                        content += response.body().getProducts().get(i).getDescription() + "\n";
-                        content += response.body().getProducts().get(i).getUserId() + "\n\n";
+                    tmp = response.body();
+                    productview.setProducts_array(tmp.getProducts());
+                    listview.setAdapter(productview);
 
-                        textViewResult.append(content);
-
-                    }
                     Log.d("cibo", "voglio vedere eheeeeeeeeeeeeeeeeeeeeeeeeeeee "+response.body().getToken());
                     SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME1, MODE_PRIVATE).edit();
                     editor.putString(MY_KEY1, response.body().getToken());
@@ -120,4 +134,7 @@ public class Products extends AppCompatActivity {
         sessionToken = myData;
 
     }
+
+
+
 }

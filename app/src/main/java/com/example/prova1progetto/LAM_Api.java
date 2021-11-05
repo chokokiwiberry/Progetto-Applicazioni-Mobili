@@ -40,6 +40,9 @@ public interface LAM_Api {
     @POST("products")
     Call<Product> postProduct(@Header("Authorization") String auth, @Body Map<String, Object> body);
 
+
+
+
     @FormUrlEncoded
     @POST("products")
     Call<Product> postProduct1(
