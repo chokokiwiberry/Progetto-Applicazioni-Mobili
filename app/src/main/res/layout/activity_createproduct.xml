@@ -40,52 +40,49 @@
         android:hint="Barcode da inserire di nuovo?"
         android:inputType="text"
       />
-    <Button
-        android:id="@+id/id_saveproduct"
-        android:layout_width="wrap_content"
+
+
+    <LinearLayout
         android:layout_height="wrap_content"
-        android:text="Save" />
-
-
-    <RelativeLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:gravity="center"
         >
-
-        <ImageView
-            android:id="@+id/id_imageview"
-            android:layout_width="326dp"
-            android:layout_height="301dp"
-            app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24"
-            />
-
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+        <Button
+            android:id = "@+id/id_gallery"
             android:layout_width="wrap_content"
-            android:gravity="center"
-
-            >
-    <Button
-        android:id = "@+id/id_gallery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text ="Gallery"
-        android:drawableLeft="@drawable/ic_baseline_image_24"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text ="Gallery"
+            android:drawableLeft="@drawable/ic_baseline_image_24"/>
 
         <Button
             android:id="@+id/id_takephoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_baseline_camera_alt_24"
             android:layout_gravity="center"
-            android:text="Take a picture" />
+            android:text="Take a picture"
+            android:drawableLeft="@drawable/ic_baseline_camera_alt_24"/>
 
-</LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
+
+    <ImageView
+        android:id="@+id/id_imageview"
+        android:layout_width="242dp"
+        android:layout_height="243dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24" />
+
+
+
+    <Button
+        android:id="@+id/id_saveproduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_gravity="right"
+        android:drawableLeft="@drawable/ic_baseline_save_24"/>
 
     <Switch
         android:id="@+id/id_test"

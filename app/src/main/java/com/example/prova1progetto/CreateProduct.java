@@ -5,11 +5,14 @@ import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,12 +30,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,6 +66,10 @@ public class CreateProduct extends AppCompatActivity {
 
     ActivityResultLauncher<String> getGalleryContent;
     ActivityResultLauncher<Intent> launchCamera;
+
+    String encodedImage;
+
+    String uriEncodedImage;
 
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,6 +110,7 @@ public class CreateProduct extends AppCompatActivity {
                             Bundle bundle = result.getData().getExtras();
                             Bitmap bitmap = (Bitmap) bundle.get("data");
                             imageView.setImageBitmap(bitmap);
+                            encodedImage = encodeImage(bitmap);
                         }
                     }
                 });
@@ -110,6 +119,16 @@ public class CreateProduct extends AppCompatActivity {
             @Override
             public void onActivityResult(Uri result) {
                 imageView.setImageURI(result);
+                try {
+                    final Uri imageUri = result;
+                    final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                    uriEncodedImage = encodeImage(selectedImage);
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+
+                }
             }
         });
 
@@ -120,10 +139,16 @@ public class CreateProduct extends AppCompatActivity {
         gallerybutton.setOnClickListener(v -> {
             getGalleryContent.launch("image/*");
         });
-
-
     }
 
+    private String encodeImage(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return encImage;
+    }
 
     private void saveProduct() {
         try {
@@ -164,7 +189,7 @@ public class CreateProduct extends AppCompatActivity {
 
     private void openCamera() {
         Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            launchCamera.launch(camera);
+        launchCamera.launch(camera);
     }
 
     private void askPermission() {
