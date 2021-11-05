@@ -1,66 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="vertical">
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
+
+
+
     <EditText
         android:id="@+id/id_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Product's name"
         android:inputType="text"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="31dp" />
-
+       />
 
     <EditText
         android:id="@+id/id_description"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Insert description"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/id_saveproduct"
-        tools:layout_editor_absoluteX="0dp" />
+        />
 
     <EditText
         android:id="@+id/id_barcode"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Barcode da inserire di nuovo?"
         android:inputType="text"
       />
-        <Button
-            android:id = "@+id/id_takephoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text ="Take a picture"
-            android:drawableLeft="@drawable/ic_baseline_camera_alt_24"
-
-
-        />
-        <Button
-            android:id = "@+id/id_savepic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text ="Prova salva picture"
-        />
-
     <Button
         android:id="@+id/id_saveproduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="Save" />
 
-       />
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+
+        <ImageView
+            android:id="@+id/id_imageview"
+            android:layout_width="326dp"
+            android:layout_height="301dp"
+            app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24"
+            />
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+
+            >
+    <Button
+        android:id = "@+id/id_gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text ="Gallery"
+        android:drawableLeft="@drawable/ic_baseline_image_24"/>
+
+        <Button
+            android:id="@+id/id_takephoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_baseline_camera_alt_24"
+            android:layout_gravity="center"
+            android:text="Take a picture" />
+
+</LinearLayout>
+    </RelativeLayout>
+
 
     <Switch
         android:id="@+id/id_test"
@@ -68,18 +93,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="124dp"
         android:text="Test"
-        app:layout_constraintBottom_toTopOf="@+id/id_saveproduct"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_email"
-        app:layout_constraintVertical_bias="0.321" />
-        <ImageView
-            android:layout_width="match_parent"
-            android:id="@+id/id_imageview"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
-    </LinearLayout>
+  />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</LinearLayout>
