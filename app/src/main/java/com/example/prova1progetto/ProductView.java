@@ -2,6 +2,7 @@ package com.example.prova1progetto;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,9 @@ public class ProductView extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(activity.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.product_layout, null);
 
+        //prendo il valore di userid da register
+
+
         ImageView imageProduct = convertView.findViewById(R.id.product_image);
         TextView barcodeProduct = convertView.findViewById(R.id.product_barcode);
         TextView nameProduct = convertView.findViewById(R.id.product_name);
@@ -83,11 +87,12 @@ public class ProductView extends BaseAdapter {
         saveproduct.setOnClickListener(v->{
             Log.d("ciboo", "ma is spero che funzioni?");
         });
+
+        deleteproduct.setOnClickListener(v->{
+            productInterface.deleteProduct(products_array.get(position).getId());
+        });
         return convertView;
     }
-    public void prova(float rating, String idprod){
-        //funzione empty per permettere di avere il click del button
-        Log.d("palla", "sono stato cliccato dalle stelle rating: " + rating +" nananna idprod: " + idprod);
-    }
+
 
 }

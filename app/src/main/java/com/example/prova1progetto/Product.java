@@ -32,6 +32,10 @@ public class Product {
     private Date createdAt;
     @SerializedName("updatedAt")
     private Date updatedAt;
+    @SerializedName("productId")
+    private String productId;
+
+
 
     public String getId() {
         return id;
@@ -101,5 +105,13 @@ public class Product {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 }

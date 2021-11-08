@@ -21,7 +21,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.w3c.dom.Text;
 
+import java.security.spec.ECField;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -138,7 +141,65 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
     @Override
     public void postRank(float rank, String idProd) {
-        Log.d("palla", "sono in products e sono interfaccia overridato " +rank +"sono prodotto id "+ idProd);
+        Log.d("palla", "sono in products e sono interfaccia overridato " + rank + "sono prodotto id " + idProd);
+        try {
+            Map<String, Object> postData = new HashMap<>();
+            postData.put("token", sessionToken);
+            postData.put("rating", rank);
+            postData.put("productId", idProd);
+
+            Log.d("palla", "sto per essere impachettato: " + postData);
+
+            Call<Product> call = lam_api.postPreference("Bearer " + received_token, postData);
+            call.enqueue(new Callback<Product>() {
+                @Override
+                public void onResponse(Call<Product> call, Response<Product> response) {
+                    if (!response.isSuccessful()){
+                        Log.d("palla", "nope rating nn ha funzionato");
+                    }
+                    Log.d("palla", "ha funzionato");
+                    Product res = response.body();
+                    Log.d("palla", String.valueOf(response.code()));
+                    Log.d("palla", "cipollinoèèèèè "+ res);
+                }
+
+                @Override
+                public void onFailure(Call<Product> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    @Override
+    public void deleteProduct(String idProd) {
+        try{
+            Call<Product> call = lam_api.deleteProduct("Bearer " + received_token, idProd);
+            call.enqueue(new Callback<Product>() {
+                @Override
+                public void onResponse(Call<Product> call, Response<Product> response) {
+                    if (!response.isSuccessful()){
+                        Log.d("palla", "nn hai cancellato scemooooo");
+                        Log.d("palla", String.valueOf(response.body()));
+                        return;
+                    }
+                    Product res = response.body();
+                    Log.d("palla", "ecco hai cancellato " + res);
+                    Log.d("palla", response.message());
+                    Log.d("palla", "il codice di cancellazione " + response.code());
+                }
+
+                @Override
+                public void onFailure(Call<Product> call, Throwable t) {
+
+                }
+            });
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
 }
