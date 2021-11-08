@@ -24,12 +24,12 @@ public class MainActivity extends AppCompatActivity {
         register_button = findViewById(R.id.id_register); // bisogna fare attenzione agli id giusti da passare
         login_button = findViewById(R.id.id_login_text);
         register_button.setOnClickListener(v -> {
-            Intent add = new Intent(this, Register.class);
-            startActivity(add);
+            Intent register = new Intent(this, Register.class);
+            startActivity(register);
         });
         login_button.setOnClickListener(v -> {
-            Intent add = new Intent(this, Login.class);
-            startActivity(add);
+            Intent login = new Intent(this, Login.class);
+            startActivity(login);
         });
 
 

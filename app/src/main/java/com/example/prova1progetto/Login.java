@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +37,13 @@ public class Login extends AppCompatActivity {
 
     String PREF_NAME = "token";
     String MY_KEY = "";
+
     SharedPreferences sharedPreferences;
+
+
+
+
+    private String userId;
 
     private LAM_Api lam_api;
 
@@ -50,11 +57,19 @@ public class Login extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 
+        //prendo il valore di userid da register
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("USERID", Context.MODE_PRIVATE);
+        userId = prefs.getString("userid", "");//"No name defined" is the default value.
+
+
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://lam21.iot-prism-lab.cs.unibo.it/") //l'url è stato cambiato
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         lam_api = retrofit.create(LAM_Api.class);
+
+
 
         loginbutton.setOnClickListener(v -> {
             String token = "";
@@ -66,6 +81,7 @@ public class Login extends AppCompatActivity {
                 //dato che bisogna sempre controllare il token, glielo passo nella componente
 
                 Intent Pantry = new Intent(this, Pantry.class);
+                Pantry.putExtra("userId", userId);
                 Pantry.putExtra("token", token);
                 startActivity(Pantry);
             }
@@ -98,6 +114,7 @@ public class Login extends AppCompatActivity {
                     userlogged.setToken(response.body().getToken());
                     SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
                     editor.putString(MY_KEY, response.body().getToken());
+                    //editor.putString(KEY_USERID, response.body().get)
                     editor.apply();
                     Log.d("cibo", userlogged.getToken());
                 }

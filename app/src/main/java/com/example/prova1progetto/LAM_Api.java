@@ -27,6 +27,10 @@ public interface LAM_Api {
         //faccio una post del tipo user - dato che ho definito, decidere come trattare il campo email
     Call<User> Login(@Body Map<String, String> body);
 
+    @Headers("Content-Type: application/json")
+    @POST("users")
+        //faccio una post del tipo user - dato che ho definito, decidere come trattare il campo email
+    Call<User> Register(@Body Map<String, String> body);
 
     @FormUrlEncoded
     @POST("auth/login")

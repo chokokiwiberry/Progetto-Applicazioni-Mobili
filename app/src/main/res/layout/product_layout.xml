@@ -52,6 +52,8 @@
         android:id="@+id/product_ranking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
         android:layout_gravity="right"/>
 
     <Button
@@ -59,5 +61,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save product" />
+
+    <Button
+        android:id="@+id/product_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete product" />
 
 </LinearLayout>

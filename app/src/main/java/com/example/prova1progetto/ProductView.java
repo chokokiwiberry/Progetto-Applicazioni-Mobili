@@ -7,14 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.List;
 
 public class ProductView extends BaseAdapter {
     private List<Product> products_array;
+
+
+
     Context activity;
+    ProductInterface productInterface;
 
     public List<Product> getProducts_array() {
         return products_array;
@@ -23,8 +29,10 @@ public class ProductView extends BaseAdapter {
     public void setProducts_array(List<Product> products_array) {
         this.products_array = products_array;
     }
-    ProductView(Context activity){
+    ProductView(Context activity, ProductInterface productInterface){
+
         this.activity = activity;
+        this.productInterface = productInterface;
     }
 
     @Override
@@ -46,13 +54,16 @@ public class ProductView extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(activity.LAYOUT_INFLATER_SERVICE);
-        Log.d("cibo", "ma ci arrivo fino a view?");
         convertView = inflater.inflate(R.layout.product_layout, null);
 
         ImageView imageProduct = convertView.findViewById(R.id.product_image);
         TextView barcodeProduct = convertView.findViewById(R.id.product_barcode);
         TextView nameProduct = convertView.findViewById(R.id.product_name);
         TextView descriptionProduct = convertView.findViewById(R.id.product_description);
+        RatingBar ratingproduct = convertView.findViewById(R.id.product_ranking);
+
+        Button saveproduct = convertView.findViewById(R.id.product_save);
+        Button deleteproduct = convertView.findViewById(R.id.product_delete);
 
         //have to decode the image received from the server and then set it
 
@@ -60,6 +71,23 @@ public class ProductView extends BaseAdapter {
         nameProduct.setText(products_array.get(position).getName());
         descriptionProduct.setText(products_array.get(position).getDescription());
 
+        //questo è il modo per poter ascoltare alla rating bar
+       ratingproduct.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+           @Override
+           public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+               Log.d("palla", "ma perch");
+               productInterface.postRank(rating, products_array.get(position).getId());
+
+           }
+       });
+        saveproduct.setOnClickListener(v->{
+            Log.d("ciboo", "ma is spero che funzioni?");
+        });
         return convertView;
     }
+    public void prova(float rating, String idprod){
+        //funzione empty per permettere di avere il click del button
+        Log.d("palla", "sono stato cliccato dalle stelle rating: " + rating +" nananna idprod: " + idprod);
+    }
+
 }

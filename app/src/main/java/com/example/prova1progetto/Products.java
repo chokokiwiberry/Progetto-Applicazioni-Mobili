@@ -28,8 +28,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-public class Products extends AppCompatActivity {
+//Logica per chiamate GET
+//Logica per chiamata POSTPREFERENCE
+//Logica per DELETE DEL SINGOLO PRODOTTO
+public class Products extends AppCompatActivity implements ProductInterface {
     private LAM_Api lam_api;
 
     private String passed_Barcode; // barcode passato dal pantry, digitato dall'utente
@@ -53,8 +55,7 @@ public class Products extends AppCompatActivity {
     private ListProducts tmp;
 
 
-
-    ProductView productview = new ProductView(Products.this);
+    ProductView productview = new ProductView(Products.this, this);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +67,6 @@ public class Products extends AppCompatActivity {
         listview = findViewById(R.id.listview);
 
         layout = findViewById(R.id.layoutlist);
-
 
 
         Bundle extras = getIntent().getExtras();
@@ -84,6 +84,7 @@ public class Products extends AppCompatActivity {
         getProducts(passed_Barcode);
 
         //Log.d("cibo", "sono sessionToken " +  sessionToken);
+
 
         addproduct.setOnClickListener(v -> {
             Log.d("cibo", "sono click e voglio vedere session Token " + sessionToken);
@@ -112,7 +113,7 @@ public class Products extends AppCompatActivity {
                     productview.setProducts_array(tmp.getProducts());
                     listview.setAdapter(productview);
 
-                    Log.d("cibo", "voglio vedere eheeeeeeeeeeeeeeeeeeeeeeeeeeee "+response.body().getToken());
+                    Log.d("cibo", "voglio vedere eheeeeeeeeeeeeeeeeeeeeeeeeeeee " + response.body().getToken());
                     SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME1, MODE_PRIVATE).edit();
                     editor.putString(MY_KEY1, response.body().getToken());
                     editor.apply();
@@ -130,11 +131,14 @@ public class Products extends AppCompatActivity {
         }
         SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME1, Context.MODE_PRIVATE);
         String myData = sharedPreferences.getString(MY_KEY1, "");
-        Log.d("cibo","sono shared preference muahahha "+ myData);
+        Log.d("cibo", "sono shared preference muahahha " + myData);
         sessionToken = myData;
 
     }
 
-
+    @Override
+    public void postRank(float rank, String idProd) {
+        Log.d("palla", "sono in products e sono interfaccia overridato " +rank +"sono prodotto id "+ idProd);
+    }
 
 }

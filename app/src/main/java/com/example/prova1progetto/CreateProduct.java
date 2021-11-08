@@ -47,6 +47,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
+//Permessi per scegliere una foto dalla galleria
+//Permessi per scattare una foto
+//Si fa l'encoding dell'immagine in base64
+//Logica per la chiamata POST - create new Product
+
 public class CreateProduct extends AppCompatActivity {
 
     private Button savebutton, gallerybutton;
@@ -138,6 +143,10 @@ public class CreateProduct extends AppCompatActivity {
         gallerybutton.setOnClickListener(v -> {
             getGalleryContent.launch("image/*");
         });
+
+
+
+
     }
 
     private String encodeImage(Bitmap bm) {
@@ -201,4 +210,8 @@ public class CreateProduct extends AppCompatActivity {
             openCamera();
         }
     }
+
+   
+
+
 }

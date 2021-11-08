@@ -38,6 +38,8 @@ public class Pantry extends AppCompatActivity {
 
     private String received_token = "";
 
+    private String received_userId ="";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
