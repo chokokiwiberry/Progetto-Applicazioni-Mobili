@@ -10,6 +10,8 @@ import android.util.proto.ProtoOutputStream;
 
 import androidx.annotation.Nullable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -63,9 +65,9 @@ public static final String TABLE_PRODUCTS = "grades";
         return code;
     }
 
-    public ArrayList<Product> getAllElements() {
+    public List<Product> getAllElements() {
 
-        ArrayList<Product> list = new ArrayList<Product>();
+        List<Product> list = new ArrayList<Product>();
 
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_PRODUCTS;
@@ -82,7 +84,18 @@ public static final String TABLE_PRODUCTS = "grades";
                         Product obj = new Product();
                         //only one column
                         obj.setId(cursor.getString(0));
-
+                        obj.setName(cursor.getString(1));
+                        obj.setDescription(cursor.getString(2));
+                        obj.setImage(cursor.getString(3));
+                        String tmpDate = cursor.getString(4);
+                        SimpleDateFormat formatter1=new SimpleDateFormat("dd/MM/yyyy");
+                        Date tmpDateParsed = null;
+                        try {
+                            tmpDateParsed = formatter1.parse(tmpDate);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        obj.setCreatedAt(tmpDateParsed);
                         //you could add additional columns here..
 
                         list.add(obj);
@@ -98,6 +111,11 @@ public static final String TABLE_PRODUCTS = "grades";
         }
 
         return list;
+    }
+
+    public void deleteProduct(String id){
+        getWritableDatabase().delete(TABLE_PRODUCTS, COLUMN_ID + "=?",
+                new String[] { String.valueOf(id) });
     }
 
 }

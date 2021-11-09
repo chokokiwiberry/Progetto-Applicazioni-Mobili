@@ -1,10 +1,12 @@
 package com.example.prova1progetto;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -12,9 +14,11 @@ import java.util.List;
 public class ProductDBView  extends BaseAdapter {
     private List<Product> products_array;
     Context activity;
+    ProductInterface productInterface;
 
-    ProductDBView(Context activity){
+    ProductDBView(Context activity, ProductInterface productInterface){
         this.activity = activity;
+        this.productInterface = productInterface;
     }
     public List<Product> getProducts_array() {
         return products_array;
@@ -49,7 +53,15 @@ public class ProductDBView  extends BaseAdapter {
         TextView descriptionprod = convertView.findViewById(R.id.descriptionprod);
 
         nameprod.setText(products_array.get(position).getName());
+
         descriptionprod.setText(products_array.get(position).getDescription());
+
+        Button deleteProd = convertView.findViewById(R.id.button_delete);
+
+        deleteProd.setOnClickListener(v->{
+            productInterface.deleteLocalProduct(products_array.get(position).getId());
+        });
+
 
         return convertView;
     }
