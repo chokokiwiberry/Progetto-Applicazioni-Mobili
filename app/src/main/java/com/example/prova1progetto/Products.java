@@ -237,6 +237,6 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
     @Override
     public void deleteLocalProduct(String idProd) {
-        Log.d("cibo", "sono in products should i be here?");
+
     }
 }

@@ -60,6 +60,9 @@ public class ProductDBView  extends BaseAdapter {
 
         deleteProd.setOnClickListener(v->{
             productInterface.deleteLocalProduct(products_array.get(position).getId());
+            products_array.remove(products_array.get(position));
+            this.setProducts_array(products_array);
+            this.notifyDataSetChanged();
         });
 
 

@@ -18,12 +18,7 @@ public class LocalDBProducts extends AppCompatActivity implements ProductInterfa
         setContentView(R.layout.activity_localdbproducts);
         dbh = new DBHelper(this);
         listview = findViewById(R.id.listview);
-        //dbh.getAllElements è null
-
-        Log.d("cibo", "nananananan " + dbh.getAllElements().size());
-        for (int i=0; i<dbh.getAllElements().size(); i++){
-            Log.d("cibo", "nanananana batman "+ dbh.getAllElements().get(i).getId());
-        }
+       
 
         productDBView.setProducts_array(dbh.getAllElements());
         listview.setAdapter(productDBView);

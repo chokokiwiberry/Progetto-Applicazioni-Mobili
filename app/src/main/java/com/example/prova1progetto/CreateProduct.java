@@ -168,6 +168,7 @@ public class CreateProduct extends AppCompatActivity {
             postData.put("test", testswitch.isChecked()); //quando ci sarà la versione finale, questo sarà sempre di default falso
             Log.d("diamond", "sto per essere impachettato: " + postData);
             if (encodedImage != null){
+                Log.d("diamond", "sono la  luna  " + encodedImage);
                 postData.put("img", encodedImage);
             }
             Call<Product> call = lam_api.postProduct("Bearer " + received_token, postData);
