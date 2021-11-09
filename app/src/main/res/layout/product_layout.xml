@@ -55,17 +55,30 @@
         android:numStars="5"
         android:stepSize="1"
         android:layout_gravity="right"/>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/product_save"
-        android:layout_width="match_parent"
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save product" />
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/product_delete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete product" />
+        <Button
+            android:id="@+id/product_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save product" />
+
+        <Button
+            android:id="@+id/product_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete product" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

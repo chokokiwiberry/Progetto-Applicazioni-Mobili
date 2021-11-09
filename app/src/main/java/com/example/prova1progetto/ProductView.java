@@ -3,6 +3,10 @@ package com.example.prova1progetto;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +17,13 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class ProductView extends BaseAdapter {
@@ -22,6 +33,8 @@ public class ProductView extends BaseAdapter {
 
     Context activity;
     ProductInterface productInterface;
+    ProductDBInterface productDBInterface;
+
 
     public List<Product> getProducts_array() {
         return products_array;
@@ -35,6 +48,12 @@ public class ProductView extends BaseAdapter {
         this.activity = activity;
         this.productInterface = productInterface;
     }
+
+    ProductView(Context activity, ProductDBInterface productDBInterface){
+        this.productDBInterface = productDBInterface;
+    }
+
+
 
     @Override
     public int getCount() {
@@ -74,6 +93,19 @@ public class ProductView extends BaseAdapter {
         barcodeProduct.setText(products_array.get(position).getBarcode());
         nameProduct.setText(products_array.get(position).getName());
         descriptionProduct.setText(products_array.get(position).getDescription());
+       Object tmp = products_array.get(position).getImage();
+
+        if (tmp!=null){
+          /*  String dataStr = tmp.toString().startsWith("data:image") ? tmp.toString().substring(tmp.toString().indexOf(',') + 1) : tmp.toString();
+            byte[] decodedString = Base64.decode(dataStr, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            imageProduct.setImageBitmap(decodedByte);*/
+            String base64String = tmp.toString().trim();
+        }
+
+
+
+
 
         //questo è il modo per poter ascoltare alla rating bar
        ratingproduct.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -85,14 +117,28 @@ public class ProductView extends BaseAdapter {
            }
        });
         saveproduct.setOnClickListener(v->{
+            String data;
             Log.d("ciboo", "ma is spero che funzioni?");
+            if (products_array.get(position).getImage()==null){
+                data = "null";
+            } else{
+                data = products_array.get(position).getImage().toString();
+            }
+            productInterface.saveProduct(
+                    products_array.get(position).getName(),
+                    products_array.get(position).getDescription(),
+                    data,
+                    products_array.get(position).getCreatedAt().toString()
+            );
         });
 
         deleteproduct.setOnClickListener(v->{
-            productInterface.deleteProduct(products_array.get(position).getId());
+            productInterface.deleteProduct(products_array.get(position).getId(), products_array.get(position).getUserId());
         });
         return convertView;
     }
 
 
+
 }
+

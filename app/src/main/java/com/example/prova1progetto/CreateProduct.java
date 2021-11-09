@@ -177,6 +177,7 @@ public class CreateProduct extends AppCompatActivity {
                     Log.d("cibo", "response");
                     if (!response.isSuccessful()) {
                         Log.d("diamond", "you did but didnt work " + String.valueOf(response));
+                        return;
                     }
                     Log.d("diamond", String.valueOf(response.body()));
                     Log.d("diamond", "anananananannanana " + response.code());

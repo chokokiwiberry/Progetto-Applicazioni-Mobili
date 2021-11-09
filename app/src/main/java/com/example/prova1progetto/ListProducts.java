@@ -30,4 +30,6 @@ public class ListProducts extends Product {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
+
 }

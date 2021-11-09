@@ -3,6 +3,7 @@ package com.example.prova1progetto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,7 +23,7 @@ public class Product {
     private String barcode;
 
     @SerializedName("img")
-    private String image; //da definire meglio, se img o string
+    private Object image; //da definire meglio, se img o string
 
     @SerializedName("userId")
     private String userId; //user? da guardare meglio
@@ -53,7 +54,7 @@ public class Product {
         return barcode;
     }
 
-    public String getImage() {
+    public Object getImage() {
         return image;
     }
 
@@ -89,7 +90,7 @@ public class Product {
         this.barcode = barcode;
     }
 
-    public void setImage(String image) {
+    public void setImage(Object image) {
         this.image = image;
     }
 
@@ -114,4 +115,20 @@ public class Product {
     public void setProductId(String productId) {
         this.productId = productId;
     }
+
+    /*Product(String s, String id, String name, String image, String date){
+        this.id = id;
+        this.name = name;
+        Object objIm = image;
+        this.image = objIm;
+        SimpleDateFormat formatter1=new SimpleDateFormat("dd/MM/yyyy");
+        Date date1= null;
+        try {
+            date1 = formatter1.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.createdAt = date1;
+
+    }*/
 }

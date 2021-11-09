@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +48,8 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
     private String sessionToken;
 
+    private String userId;
+
     String PREF_NAME1 = "session_token";
     String MY_KEY1 = "";
     SharedPreferences sharedPreferences1;
@@ -59,6 +62,8 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
 
     ProductView productview = new ProductView(Products.this, this);
+    private static DBHelper dbh;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +75,11 @@ public class Products extends AppCompatActivity implements ProductInterface {
         listview = findViewById(R.id.listview);
 
         layout = findViewById(R.id.layoutlist);
+        dbh = new DBHelper(this);
 
+        //prendo il valore di userid da register
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("USERID", Context.MODE_PRIVATE);
+        userId = prefs.getString("userid", "");//"No name defined" is the default value.
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -113,6 +122,9 @@ public class Products extends AppCompatActivity implements ProductInterface {
                     }
 
                     tmp = response.body();
+                    for (int i=0; i<tmp.getProducts().size(); i++){
+                        Log.d("tronk", String.valueOf(tmp.getProducts().get(i).getImage()));
+                    }
                     productview.setProducts_array(tmp.getProducts());
                     listview.setAdapter(productview);
 
@@ -174,32 +186,52 @@ public class Products extends AppCompatActivity implements ProductInterface {
     }
 
     @Override
-    public void deleteProduct(String idProd) {
-        try{
-            Call<Product> call = lam_api.deleteProduct("Bearer " + received_token, idProd);
-            call.enqueue(new Callback<Product>() {
-                @Override
-                public void onResponse(Call<Product> call, Response<Product> response) {
-                    if (!response.isSuccessful()){
-                        Log.d("palla", "nn hai cancellato scemooooo");
-                        Log.d("palla", String.valueOf(response.body()));
-                        return;
+    public void deleteProduct(String idProd, String idUser) {
+        if (idUser.equals(userId)){
+            try{
+                Call<Product> call = lam_api.deleteProduct("Bearer " + received_token, idProd);
+                call.enqueue(new Callback<Product>() {
+                    @Override
+                    public void onResponse(Call<Product> call, Response<Product> response) {
+                        if (!response.isSuccessful()){
+                            Log.d("palla", "nn hai cancellato scemooooo");
+                            Log.d("palla", String.valueOf(response.body()));
+                            return;
+                        }
+                        Product res = response.body();
+                        Log.d("palla", "ecco hai cancellato " + res);
+                        Log.d("palla", response.message());
+                        Log.d("palla", "il codice di cancellazione " + response.code());
                     }
-                    Product res = response.body();
-                    Log.d("palla", "ecco hai cancellato " + res);
-                    Log.d("palla", response.message());
-                    Log.d("palla", "il codice di cancellazione " + response.code());
-                }
 
-                @Override
-                public void onFailure(Call<Product> call, Throwable t) {
+                    @Override
+                    public void onFailure(Call<Product> call, Throwable t) {
 
-                }
-            });
+                    }
+                });
 
-        }catch (Exception e){
-            e.printStackTrace();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        } else{
+            //fare una finestra dialogo da mostrare?
+            Toast.makeText(this, "This product is not yours", Toast.LENGTH_SHORT).show();
         }
 
+
+    }
+
+
+    @Override
+    public void saveProduct(String prod_name, String prod_desc, String prod_img, String prod_date) {
+        Log.d("ciboo", "per caso sono in products?????!");
+        Log.d("ciboo", "dovrebbe essere in local");
+        DBHelper dbh = new DBHelper(getApplicationContext());
+        long code = dbh.insertNewProduct(prod_name, prod_desc, prod_img, prod_date);
+        if (code != -1)
+            Toast.makeText(getApplicationContext(), "Product saved successfully!",
+                    Toast.LENGTH_LONG).show();
+        finish();
+      
     }
 }

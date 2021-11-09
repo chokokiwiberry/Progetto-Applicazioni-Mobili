@@ -35,10 +35,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //e poi dichiariamo le funzioni
-    public void prova(View v) {
-        System.out.println("prova ciao prova");
-    }
-
 
 }
