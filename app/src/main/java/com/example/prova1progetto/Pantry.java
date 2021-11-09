@@ -26,11 +26,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Pantry extends AppCompatActivity {
-    private final OkHttpClient client = new OkHttpClient();
     private static final String TAG = "cibo";
     private String barcode;
     EditText barcode_input;
     Button getButton;
+    Button localpantryButton;
 
     Button checkPantry; //button per vedere cosa hai dentro al pantry
 
@@ -48,6 +48,8 @@ public class Pantry extends AppCompatActivity {
         barcode_input = (EditText) findViewById(R.id.id_insertbarcode);
 
         getButton = findViewById(R.id.id_getproducts);
+
+        localpantryButton = findViewById(R.id.id_checkPantry);
 
 
         getButton.setOnClickListener(v -> {
@@ -67,6 +69,12 @@ public class Pantry extends AppCompatActivity {
 
         //button per vedere che cosa hai all'interno del proprio pantry
         //quindi ci sarà un database locale
+
+        localpantryButton.setOnClickListener(v ->{
+            Intent LocalDb = new Intent(this, LocalDBProducts.class);
+            startActivity(LocalDb);
+
+        });
 
     }
 

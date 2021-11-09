@@ -232,6 +232,6 @@ public class Products extends AppCompatActivity implements ProductInterface {
             Toast.makeText(getApplicationContext(), "Product saved successfully!",
                     Toast.LENGTH_LONG).show();
         finish();
-      
+
     }
 }

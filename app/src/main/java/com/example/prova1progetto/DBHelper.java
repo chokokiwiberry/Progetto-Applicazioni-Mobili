@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.util.proto.ProtoOutputStream;
 
 import androidx.annotation.Nullable;
 
@@ -60,6 +61,43 @@ public static final String TABLE_PRODUCTS = "grades";
 
         long code = getWritableDatabase().insert(TABLE_PRODUCTS, null, cv);
         return code;
+    }
+
+    public ArrayList<Product> getAllElements() {
+
+        ArrayList<Product> list = new ArrayList<Product>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_PRODUCTS;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        try {
+
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            try {
+
+                // looping through all rows and adding to list
+                if (cursor.moveToFirst()) {
+                    do {
+                        Product obj = new Product();
+                        //only one column
+                        obj.setId(cursor.getString(0));
+
+                        //you could add additional columns here..
+
+                        list.add(obj);
+                    } while (cursor.moveToNext());
+                }
+
+            } finally {
+                try { cursor.close(); } catch (Exception ignore) {}
+            }
+
+        } finally {
+            try { db.close(); } catch (Exception ignore) {}
+        }
+
+        return list;
     }
 
 }

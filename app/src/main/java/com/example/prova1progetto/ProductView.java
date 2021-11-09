@@ -33,7 +33,6 @@ public class ProductView extends BaseAdapter {
 
     Context activity;
     ProductInterface productInterface;
-    ProductDBInterface productDBInterface;
 
 
     public List<Product> getProducts_array() {
@@ -49,9 +48,7 @@ public class ProductView extends BaseAdapter {
         this.productInterface = productInterface;
     }
 
-    ProductView(Context activity, ProductDBInterface productDBInterface){
-        this.productDBInterface = productDBInterface;
-    }
+
 
 
 

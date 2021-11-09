@@ -22,29 +22,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <EditText
+    <TextView
         android:textColor="#000"
         android:textStyle="bold"
-        android:id="@+id/edittext_name"
+        android:id="@+id/namprod"
         android:text="Name"
         android:layout_margin="5dp"
         android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <EditText
+    <TextView
         android:textColor="#000"
         android:textStyle="bold"
-        android:id="@+id/edittext_description"
+        android:id="@+id/descriptionprod"
         android:text="Description"
         android:layout_margin="5dp"
         android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <EditText
+    <TextView
         android:textColor="#000"
         android:textStyle="bold"
-        android:id="@+id/edittext_date"
+        android:id="@+id/dateprod"
         android:text="Date"
         android:layout_margin="5dp"
         android:textSize="18sp"
