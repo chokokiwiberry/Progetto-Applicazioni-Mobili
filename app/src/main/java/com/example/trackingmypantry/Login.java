@@ -1,12 +1,10 @@
-package com.example.prova1progetto;
+package com.example.trackingmypantry;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,12 +13,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import Interfaces.LAM_Api;
+import POJO.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

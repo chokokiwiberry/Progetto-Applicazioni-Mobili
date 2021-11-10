@@ -1,19 +1,16 @@
-package com.example.prova1progetto;
+package com.example.trackingmypantry;
 
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -22,14 +19,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -37,13 +32,13 @@ import androidx.core.content.ContextCompat;
 
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import Interfaces.LAM_Api;
+import POJO.Product;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -79,6 +74,8 @@ public class CreateProduct extends AppCompatActivity {
 
     String encodedImage = null;
 
+    //variabile che indica se l'utente abbia cliccato per la chiusura della finestra dialog
+    Boolean clickedDialog = false;
 
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -214,6 +211,7 @@ public class CreateProduct extends AppCompatActivity {
                             "Ok",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    clickedDialog = true;
                                     dialog.cancel();
                                 }
                             });
@@ -222,6 +220,7 @@ public class CreateProduct extends AppCompatActivity {
                             "Close",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    clickedDialog = true;
                                     dialog.cancel();
                                 }
                             });
@@ -229,7 +228,10 @@ public class CreateProduct extends AppCompatActivity {
                     AlertDialog alert11 = builder.create();
                     alert11.show();
 
-                    Pantry();
+                    if(clickedDialog){
+                        Pantry();
+                    }
+
 
                 }
 

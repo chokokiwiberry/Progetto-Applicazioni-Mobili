@@ -1,11 +1,9 @@
-package com.example.prova1progetto;
+package Adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,19 +12,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import Interfaces.ProductInterface;
+import com.example.trackingmypantry.R;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+
+import POJO.Product;
+
 //adapter per vedere i prodotti in locale
 public class ProductDBView  extends BaseAdapter {
     private List<Product> products_array;
     Context activity;
     ProductInterface productInterface;
 
-    ProductDBView(Context activity, ProductInterface productInterface){
+    public ProductDBView(Context activity, ProductInterface productInterface){
         this.activity = activity;
         this.productInterface = productInterface;
     }

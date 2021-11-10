@@ -1,10 +1,9 @@
-package com.example.prova1progetto;
+package com.example.trackingmypantry;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.HashMap;
 import java.util.Map;
 
+import Interfaces.LAM_Api;
+import POJO.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

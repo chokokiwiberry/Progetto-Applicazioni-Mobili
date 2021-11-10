@@ -1,4 +1,4 @@
-package com.example.prova1progetto;
+package Interfaces;
 
 public interface ProductInterface {
 

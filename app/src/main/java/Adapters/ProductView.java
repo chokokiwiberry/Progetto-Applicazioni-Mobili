@@ -1,11 +1,8 @@
-package com.example.prova1progetto;
+package Adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,14 +14,13 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
+import Interfaces.ProductInterface;
+import com.example.trackingmypantry.R;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
+
+import POJO.Product;
+
 //Adapter per vedere i prodotti ricevuti dal server
 public class ProductView extends BaseAdapter {
     private List<Product> products_array;
@@ -42,7 +38,7 @@ public class ProductView extends BaseAdapter {
     public void setProducts_array(List<Product> products_array) {
         this.products_array = products_array;
     }
-    ProductView(Context activity, ProductInterface productInterface){
+    public ProductView(Context activity, ProductInterface productInterface){
 
         this.activity = activity;
         this.productInterface = productInterface;

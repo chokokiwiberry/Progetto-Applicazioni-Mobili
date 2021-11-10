@@ -1,11 +1,13 @@
-package com.example.prova1progetto;
+package com.example.trackingmypantry;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import Adapters.ProductDBView;
+import Interfaces.ProductInterface;
 
 public class LocalDBProducts extends AppCompatActivity implements ProductInterface {
 

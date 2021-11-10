@@ -1,4 +1,4 @@
-package com.example.prova1progetto;
+package com.example.trackingmypantry;
 
 import android.content.Context;
 

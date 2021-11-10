@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.prova1progetto">
+    package="com.example.trackingmypantry">
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -16,19 +16,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Prova1progetto">
-        <activity android:name=".Pantry"
+        <activity android:name="com.example.trackingmypantry.Pantry"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Register"
+        <activity android:name="com.example.trackingmypantry.Register"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Login"
+        <activity android:name="com.example.trackingmypantry.Login"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Products"
+        <activity android:name="com.example.trackingmypantry.Products"
             android:screenOrientation="portrait"/>
-        <activity android:name=".CreateProduct"
+        <activity android:name="com.example.trackingmypantry.CreateProduct"
             android:screenOrientation="portrait"/>
-        <activity android:name=".LocalDBProducts"
+        <activity android:name="com.example.trackingmypantry.LocalDBProducts"
             android:screenOrientation="portrait"/>
-        <activity android:name=".MainActivity"
+        <activity android:name="com.example.trackingmypantry.MainActivity"
             android:screenOrientation="portrait">
 
             <intent-filter>

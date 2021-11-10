@@ -1,10 +1,7 @@
-package com.example.prova1progetto;
-
-import android.widget.ArrayAdapter;
+package POJO;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 //POJO
 public class ListProducts extends Product {

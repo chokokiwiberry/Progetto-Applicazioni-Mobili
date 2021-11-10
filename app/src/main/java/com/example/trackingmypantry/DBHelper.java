@@ -1,4 +1,4 @@
-package com.example.prova1progetto;
+package com.example.trackingmypantry;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,15 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.util.proto.ProtoOutputStream;
 
-import androidx.annotation.Nullable;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import POJO.Product;
 
 public class DBHelper extends SQLiteOpenHelper {
 

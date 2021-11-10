@@ -1,4 +1,4 @@
-package com.example.prova1progetto;
+package POJO;
 
 import com.google.gson.annotations.SerializedName;
 
