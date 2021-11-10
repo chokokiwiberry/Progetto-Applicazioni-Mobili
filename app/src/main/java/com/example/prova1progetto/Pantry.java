@@ -49,9 +49,7 @@ public class Pantry extends AppCompatActivity {
     EditText barcode_input;
     Button getButton;
     Button localpantryButton;
-
-    Button checkPantry; //button per vedere cosa hai dentro al pantry
-
+    
     private String passed_Token = "";
 
     private String received_token = "";
@@ -98,7 +96,7 @@ public class Pantry extends AppCompatActivity {
 
 
         });
-        
+
 
         localpantryButton.setOnClickListener(v ->{
             Intent LocalDb = new Intent(this, LocalDBProducts.class);
@@ -107,7 +105,7 @@ public class Pantry extends AppCompatActivity {
         });
 
         scanBarcode.setOnClickListener(v-> {
-            barcodeLauncher.launch(new ScanOptions());
+            askPermission();
         });
         barcodeLauncher = registerForActivityResult(new ScanContract(),
                 result -> {
@@ -126,6 +124,12 @@ public class Pantry extends AppCompatActivity {
         startActivity(Login);
     }
 
-
+    private void askPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
+        } else {
+            barcodeLauncher.launch(new ScanOptions());
+        }
+    }
 
 }
