@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
-
+//adapter per vedere i prodotti in locale
 public class ProductDBView  extends BaseAdapter {
     private List<Product> products_array;
     Context activity;

@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
-
+//Adapter per vedere i prodotti ricevuti dal server
 public class ProductView extends BaseAdapter {
     private List<Product> products_array;
 
@@ -93,11 +93,8 @@ public class ProductView extends BaseAdapter {
        Object tmp = products_array.get(position).getImage();
 
         if (tmp!=null){
-          /*  String dataStr = tmp.toString().startsWith("data:image") ? tmp.toString().substring(tmp.toString().indexOf(',') + 1) : tmp.toString();
-            byte[] decodedString = Base64.decode(dataStr, Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            imageProduct.setImageBitmap(decodedByte);*/
-            String base64String = tmp.toString().trim();
+          Bitmap image = decodeImage(tmp.toString());
+          imageProduct.setImageBitmap(image);
         }
 
 
@@ -135,7 +132,13 @@ public class ProductView extends BaseAdapter {
         return convertView;
     }
 
-
+    private Bitmap decodeImage(String encoded){
+        final String encodedString = encoded;
+        final String pureBase64Encoded = encodedString.substring(encodedString.indexOf(",")  + 1);
+        final byte[] decodedBytes = Base64.decode(pureBase64Encoded, Base64.DEFAULT);
+        Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+        return decodedBitmap;
+    }
 
 }
 

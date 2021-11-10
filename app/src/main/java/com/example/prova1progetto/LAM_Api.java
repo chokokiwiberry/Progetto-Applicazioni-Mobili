@@ -1,7 +1,7 @@
 package com.example.prova1progetto;
 
 
-import java.util.HashMap;
+
 import java.util.Map;
 
 import retrofit2.Call;

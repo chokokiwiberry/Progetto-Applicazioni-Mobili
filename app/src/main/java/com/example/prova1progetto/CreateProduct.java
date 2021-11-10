@@ -113,8 +113,10 @@ public class CreateProduct extends AppCompatActivity {
                             Log.d("diamond", "credo che non arrivi qui");
                             Bundle bundle = result.getData().getExtras();
                             Bitmap bitmap = (Bitmap) bundle.get("data");
-                            imageView.setImageBitmap(bitmap);
-                            encodedImage = encodeImage(bitmap);
+                           // imageView.setImageBitmap(bitmap);
+                            Bitmap resizedImage = resizeBitmap(bitmap);
+                            imageView.setImageBitmap(resizedImage);
+                            encodedImage = encodeImage(resizedImage);
                         }
                     }
                 });
@@ -127,7 +129,10 @@ public class CreateProduct extends AppCompatActivity {
                     final Uri imageUri = result;
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                     final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                    encodedImage = encodeImage(selectedImage);
+                    Bitmap resizedImage = resizeBitmap(selectedImage);
+                    imageView.setImageBitmap(resizedImage);
+                    encodedImage = encodeImage(resizedImage);
+                  //  encodedImage = encodeImage(selectedImage);
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -157,6 +162,17 @@ public class CreateProduct extends AppCompatActivity {
 
         return encImage;
     }
+    private Bitmap resizeBitmap(Bitmap image){
+        float aspectRatio = image.getWidth() /
+                (float) image.getHeight();
+        int width = 100;
+        int height = Math.round(width / aspectRatio);
+        Bitmap originalBitmap = image;
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(
+                originalBitmap, width, height, false);
+        return resizedBitmap;
+    }
+
 
     private void saveProduct() {
         try {

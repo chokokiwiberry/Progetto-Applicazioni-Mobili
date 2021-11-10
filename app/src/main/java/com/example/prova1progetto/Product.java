@@ -116,19 +116,5 @@ public class Product {
         this.productId = productId;
     }
 
-    /*Product(String s, String id, String name, String image, String date){
-        this.id = id;
-        this.name = name;
-        Object objIm = image;
-        this.image = objIm;
-        SimpleDateFormat formatter1=new SimpleDateFormat("dd/MM/yyyy");
-        Date date1= null;
-        try {
-            date1 = formatter1.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        this.createdAt = date1;
 
-    }*/
 }

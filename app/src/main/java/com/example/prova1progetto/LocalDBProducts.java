@@ -18,7 +18,7 @@ public class LocalDBProducts extends AppCompatActivity implements ProductInterfa
         setContentView(R.layout.activity_localdbproducts);
         dbh = new DBHelper(this);
         listview = findViewById(R.id.listview);
-       
+
 
         productDBView.setProducts_array(dbh.getAllElements());
         listview.setAdapter(productDBView);

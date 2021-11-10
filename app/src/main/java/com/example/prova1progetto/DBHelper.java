@@ -78,7 +78,6 @@ public static final String TABLE_PRODUCTS = "grades";
             Cursor cursor = db.rawQuery(selectQuery, null);
             try {
 
-                // looping through all rows and adding to list
                 if (cursor.moveToFirst()) {
                     do {
                         Product obj = new Product();
@@ -96,7 +95,6 @@ public static final String TABLE_PRODUCTS = "grades";
                             e.printStackTrace();
                         }
                         obj.setCreatedAt(tmpDateParsed);
-                        //you could add additional columns here..
 
                         list.add(obj);
                     } while (cursor.moveToNext());
