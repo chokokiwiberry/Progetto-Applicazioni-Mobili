@@ -59,7 +59,7 @@ public class ProductDBView  extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(activity.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.product_db_layout, null);
 
-        TextView nameprod = convertView.findViewById(R.id.namprod);
+        TextView nameprod = convertView.findViewById(R.id.nameprod);
         TextView descriptionprod = convertView.findViewById(R.id.descriptionprod);
         TextView dateprod = convertView.findViewById(R.id.dateprod);
         ImageView imageprod = convertView.findViewById(R.id.id_imageview);

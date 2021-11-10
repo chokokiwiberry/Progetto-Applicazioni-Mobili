@@ -12,7 +12,14 @@
         android:layout_gravity="right"
         android:src="@drawable/ic_baseline_image_24" />
 
-
+    <TextView
+        android:textColor="#000"
+        android:id="@+id/nameprod"
+        android:text="Description"
+        android:layout_margin="5dp"
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
     <TextView

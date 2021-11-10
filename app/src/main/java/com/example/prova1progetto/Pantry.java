@@ -3,6 +3,7 @@ package com.example.prova1progetto;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,12 +12,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -50,8 +59,13 @@ public class Pantry extends AppCompatActivity {
     private String received_userId ="";
 
     private ImageView scanBarcode;
-    private static final int CAMERA_REQUEST_CODE = 10;
-    private static final String[] CAMERA_PERMISSION = new String[]{Manifest.permission.CAMERA};
+
+    private String scannedbarcode;
+
+    ScanOptions options = new ScanOptions();
+    ActivityResultLauncher<ScanOptions> barcodeLauncher;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,8 +83,11 @@ public class Pantry extends AppCompatActivity {
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 received_token = extras.getString("token");
-                barcode = barcode_input.getText().toString();
-
+                if (barcode_input.getText().toString().equals("")){
+                    barcode = scannedbarcode;
+                }else{
+                    barcode = barcode_input.getText().toString();
+                }
                 Intent Products = new Intent(this, Products.class);
                 Products.putExtra("barcode", barcode);
                 Products.putExtra("token", received_token);//per poter inviare questi dati all'altra activity
@@ -81,10 +98,7 @@ public class Pantry extends AppCompatActivity {
 
 
         });
-
-
-        //button per vedere che cosa hai all'interno del proprio pantry
-        //quindi ci sarà un database locale
+        
 
         localpantryButton.setOnClickListener(v ->{
             Intent LocalDb = new Intent(this, LocalDBProducts.class);
@@ -93,13 +107,24 @@ public class Pantry extends AppCompatActivity {
         });
 
         scanBarcode.setOnClickListener(v-> {
+            barcodeLauncher.launch(new ScanOptions());
         });
+        barcodeLauncher = registerForActivityResult(new ScanContract(),
+                result -> {
+                    if(result.getContents() == null) {
+                        Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                        scannedbarcode = result.getContents();
+                    }
+                });
+
     }
+
     private void Login(){
         Intent Login = new Intent(this, Login.class);
         startActivity(Login);
     }
-
 
 
 
