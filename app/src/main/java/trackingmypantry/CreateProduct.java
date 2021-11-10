@@ -1,4 +1,4 @@
-package com.example.trackingmypantry;
+package trackingmypantry;
 
 
 import android.Manifest;
@@ -30,6 +30,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+
+import com.example.trackingmypantry.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;

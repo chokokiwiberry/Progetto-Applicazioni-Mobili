@@ -1,4 +1,4 @@
-package com.example.trackingmypantry;
+package trackingmypantry;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -16,6 +16,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import com.example.trackingmypantry.R;
 
 import java.util.HashMap;
 import java.util.Map;

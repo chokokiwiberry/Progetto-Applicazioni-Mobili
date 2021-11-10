@@ -16,19 +16,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Prova1progetto">
-        <activity android:name="com.example.trackingmypantry.Pantry"
+        <activity android:name="trackingmypantry.Pantry"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.example.trackingmypantry.Register"
+        <activity android:name="trackingmypantry.Register"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.example.trackingmypantry.Login"
+        <activity android:name="trackingmypantry.Login"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.example.trackingmypantry.Products"
+        <activity android:name="trackingmypantry.Products"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.example.trackingmypantry.CreateProduct"
+        <activity android:name="trackingmypantry.CreateProduct"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.example.trackingmypantry.LocalDBProducts"
+        <activity android:name="trackingmypantry.LocalDBProducts"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.example.trackingmypantry.MainActivity"
+        <activity android:name="trackingmypantry.MainActivity"
             android:screenOrientation="portrait">
 
             <intent-filter>

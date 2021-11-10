@@ -1,4 +1,4 @@
-package com.example.trackingmypantry;
+package trackingmypantry;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.example.trackingmypantry;
+package trackingmypantry;
 
 import android.Manifest;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
+import com.example.trackingmypantry.R;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 

@@ -1,10 +1,12 @@
-package com.example.trackingmypantry;
+package trackingmypantry;
 
 import android.os.Bundle;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.trackingmypantry.R;
 
 import Adapters.ProductDBView;
 import Interfaces.ProductInterface;
