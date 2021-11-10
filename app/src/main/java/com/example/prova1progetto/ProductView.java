@@ -98,9 +98,6 @@ public class ProductView extends BaseAdapter {
         }
 
 
-
-
-
         //questo è il modo per poter ascoltare alla rating bar
        ratingproduct.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
            @Override
@@ -131,6 +128,7 @@ public class ProductView extends BaseAdapter {
         });
         return convertView;
     }
+
 
     private Bitmap decodeImage(String encoded){
         final String encodedString = encoded;

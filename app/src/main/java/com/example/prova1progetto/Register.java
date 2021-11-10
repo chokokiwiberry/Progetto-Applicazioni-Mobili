@@ -26,8 +26,11 @@ public class Register extends AppCompatActivity {
     Button register_button;
     EditText username, email, password;
 
+    String PREF_NAME = "userid";
+    String MY_KEY = "";
 
     SharedPreferences sharedPreferences;
+
 
     private String tmp_id;
     private LAM_Api lam_api;
@@ -71,13 +74,12 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "Now you can login!", Toast.LENGTH_SHORT).show();
                     tmp_id = response.body().getId();
 
-                    //public static final String MY_PREFS_NAME = "MyPrefsFile";
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("userid", response.body().getId());
+                    SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
+                    editor.putString(MY_KEY, response.body().getId());
+                    //editor.putString(KEY_USERID, response.body().get)
                     editor.apply();
-                    Log.d("fire", "sono register e sono ok e questo userid " +tmp_id);
 
-                    SharedPreferences prefs = getSharedPreferences("USERID", MODE_PRIVATE);
+                    SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
                     String useridtmp = prefs.getString("userid", "No name defined");
                     Log.d("fire", "sono useridtmp sharedpreferecend di resiter gnnna "+useridtmp);//"No name defined" is the default value.
                     Login();

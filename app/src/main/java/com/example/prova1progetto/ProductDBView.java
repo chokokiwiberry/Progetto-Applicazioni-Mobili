@@ -1,12 +1,17 @@
 package com.example.prova1progetto;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -51,12 +56,20 @@ public class ProductDBView  extends BaseAdapter {
 
         TextView nameprod = convertView.findViewById(R.id.namprod);
         TextView descriptionprod = convertView.findViewById(R.id.descriptionprod);
+        ImageView imageprod = convertView.findViewById(R.id.id_imageview);
+        Button deleteProd = convertView.findViewById(R.id.button_delete);
 
         nameprod.setText(products_array.get(position).getName());
+        Object tmpImage = products_array.get(position).getImage();
+
+        if (tmpImage!=null){
+            Bitmap image = decodeImage(tmpImage.toString());
+            imageprod.setImageBitmap(image);
+        }
 
         descriptionprod.setText(products_array.get(position).getDescription());
 
-        Button deleteProd = convertView.findViewById(R.id.button_delete);
+
 
         deleteProd.setOnClickListener(v->{
             productInterface.deleteLocalProduct(products_array.get(position).getId());
@@ -67,5 +80,12 @@ public class ProductDBView  extends BaseAdapter {
 
 
         return convertView;
+    }
+    private Bitmap decodeImage(String encoded){
+        final String encodedString = encoded;
+        final String pureBase64Encoded = encodedString.substring(encodedString.indexOf(",")  + 1);
+        final byte[] decodedBytes = Base64.decode(pureBase64Encoded, Base64.DEFAULT);
+        Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+        return decodedBitmap;
     }
 }

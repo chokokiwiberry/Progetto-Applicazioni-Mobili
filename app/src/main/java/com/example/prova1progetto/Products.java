@@ -80,6 +80,7 @@ public class Products extends AppCompatActivity implements ProductInterface {
         //prendo il valore di userid da register
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("USERID", Context.MODE_PRIVATE);
         userId = prefs.getString("userid", "");//"No name defined" is the default value.
+        Log.d("diamond2", prefs.getString("userid", ""));
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -187,6 +188,8 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
     @Override
     public void deleteProduct(String idProd, String idUser) {
+        Log.d("diamond2", "sono di products " +userId);
+        Log.d("diamond2", "sono stato  passato " + idUser);
         if (idUser.equals(userId)){
             try{
                 Call<Product> call = lam_api.deleteProduct("Bearer " + received_token, idProd);
@@ -215,6 +218,7 @@ public class Products extends AppCompatActivity implements ProductInterface {
             }
         } else{
             //fare una finestra dialogo da mostrare?
+
             Toast.makeText(this, "This product is not yours", Toast.LENGTH_SHORT).show();
         }
 
