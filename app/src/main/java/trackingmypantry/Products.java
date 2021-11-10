@@ -97,7 +97,6 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
 
         addproduct.setOnClickListener(v -> {
-            Log.d("cibo", "sono click e voglio vedere session Token " + sessionToken);
             Intent createProduct = new Intent(this, CreateProduct.class);
             createProduct.putExtra("sessionToken", sessionToken);
             createProduct.putExtra("accessToken", received_token); //bearer Token
@@ -142,17 +141,14 @@ public class Products extends AppCompatActivity implements ProductInterface {
                     }
 
                     tmp = response.body();
-                    for (int i=0; i<tmp.getProducts().size(); i++){
-                        Log.d("tronk", String.valueOf(tmp.getProducts().get(i).getImage()));
-                    }
+
                     productview.setProducts_array(tmp.getProducts());
                     listview.setAdapter(productview);
 
-                    Log.d("cibo", "voglio vedere eheeeeeeeeeeeeeeeeeeeeeeeeeeee " + response.body().getToken());
+
                     SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME1, MODE_PRIVATE).edit();
                     editor.putString(MY_KEY1, response.body().getToken());
                     editor.apply();
-                    ///da capire perché non funziona, ma funziona con il login
                 }
 
                 @Override
@@ -188,14 +184,14 @@ public class Products extends AppCompatActivity implements ProductInterface {
         }
         SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME1, Context.MODE_PRIVATE);
         String myData = sharedPreferences.getString(MY_KEY1, "");
-        Log.d("cibo", "sono shared preference muahahha " + myData);
+
         sessionToken = myData;
 
     }
 
     @Override
     public void postRank(float rank, String idProd) {
-        Log.d("palla", "sono in products e sono interfaccia overridato " + rank + "sono prodotto id " + idProd);
+
         try {
             Map<String, Object> postData = new HashMap<>();
             postData.put("token", sessionToken);
@@ -355,10 +351,7 @@ public class Products extends AppCompatActivity implements ProductInterface {
                         AlertDialog alert11 = builder.create();
                         alert11.show();
 
-                        Product res = response.body();
-                        Log.d("palla", "ecco hai cancellato " + res);
-                        Log.d("palla", response.message());
-                        Log.d("palla", "il codice di cancellazione " + response.code());
+
                     }
 
                     @Override
@@ -393,7 +386,6 @@ public class Products extends AppCompatActivity implements ProductInterface {
                 e.printStackTrace();
             }
         } else{
-
             Toast.makeText(this, "This product is not yours", Toast.LENGTH_SHORT).show();
         }
 
@@ -403,8 +395,6 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
     @Override
     public void saveProduct(String prod_name, String prod_desc, String prod_img, String prod_date) {
-        Log.d("ciboo", "per caso sono in products?????!");
-        Log.d("ciboo", "dovrebbe essere in local");
         DBHelper dbh = new DBHelper(getApplicationContext());
         long code = dbh.insertNewProduct(prod_name, prod_desc, prod_img, prod_date);
         if (code != -1)

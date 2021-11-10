@@ -116,7 +116,6 @@ public class Login extends AppCompatActivity {
                     editor.putString(MY_KEY, response.body().getToken());
                     //editor.putString(KEY_USERID, response.body().get)
                     editor.apply();
-                    Log.d("cibo", userlogged.getToken());
                 }
 
                 @Override

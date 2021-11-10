@@ -8,14 +8,18 @@ import android.widget.Button;
 
 import com.example.trackingmypantry.R;
 
-
+/**
+ * PROGETTO DI LABORATORIO APPLICAZIONI MOBILI
+ * A.A 2020/2021
+ * "Tracking my Pantry"
+ *
+ */
 public class MainActivity extends AppCompatActivity {
     Button register_button;
     Button login_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //ciò che vogliamo creare, i tipi di oggetti
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         register_button = findViewById(R.id.id_register); // bisogna fare attenzione agli id giusti da passare

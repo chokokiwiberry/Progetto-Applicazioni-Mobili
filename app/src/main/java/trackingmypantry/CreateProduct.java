@@ -118,7 +118,6 @@ public class CreateProduct extends AppCompatActivity {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                            Log.d("diamond", "credo che non arrivi qui");
                             Bundle bundle = result.getData().getExtras();
                             Bitmap bitmap = (Bitmap) bundle.get("data");
                             Bitmap resizedImage = resizeBitmap(bitmap);
@@ -169,6 +168,7 @@ public class CreateProduct extends AppCompatActivity {
 
         return encImage;
     }
+    //Rimpicciolisco l'immagine da spedire nel pacchetto al server
     private Bitmap resizeBitmap(Bitmap image){
         float aspectRatio = image.getWidth() /
                 (float) image.getHeight();
@@ -189,22 +189,17 @@ public class CreateProduct extends AppCompatActivity {
             postData.put("description", this.descriptiontext.getText().toString());
             postData.put("barcode", received_barcode); //credo che non farò inserire il barcode dall'utente - che venga letto da camera o meno
             postData.put("test", testswitch.isChecked()); //quando ci sarà la versione finale, questo sarà sempre di default falso
-            Log.d("diamond", "sto per essere impachettato: " + postData);
             if (encodedImage != null){
-                Log.d("diamond", "sono la  luna  " + encodedImage);
                 postData.put("img", encodedImage);
             }
             Call<Product> call = lam_api.postProduct("Bearer " + received_token, postData);
             call.enqueue(new Callback<Product>() {
                 @Override
                 public void onResponse(Call<Product> call, Response<Product> response) {
-                    Log.d("cibo", "response");
                     if (!response.isSuccessful()) {
-                        Log.d("diamond", "you did but didnt work " + String.valueOf(response));
                         return;
                     }
-                    Log.d("diamond", String.valueOf(response.body()));
-                    Log.d("diamond", "anananananannanana " + response.code());
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setMessage("Product has been added!");
                     builder.setCancelable(true);
@@ -239,7 +234,30 @@ public class CreateProduct extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Product> call, Throwable t) {
-                    Log.d("diamond", "ho failato male");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage("The call has failed!");
+                    builder.setCancelable(true);
+
+                    builder.setPositiveButton(
+                            "Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    clickedDialog = true;
+                                    dialog.cancel();
+                                }
+                            });
+
+                    builder.setNegativeButton(
+                            "Close",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    clickedDialog = true;
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder.create();
+                    alert11.show();
                 }
             });
 
