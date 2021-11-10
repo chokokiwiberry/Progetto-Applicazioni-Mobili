@@ -14,6 +14,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 //adapter per vedere i prodotti in locale
 public class ProductDBView  extends BaseAdapter {
@@ -56,10 +61,12 @@ public class ProductDBView  extends BaseAdapter {
 
         TextView nameprod = convertView.findViewById(R.id.namprod);
         TextView descriptionprod = convertView.findViewById(R.id.descriptionprod);
+        TextView dateprod = convertView.findViewById(R.id.dateprod);
         ImageView imageprod = convertView.findViewById(R.id.id_imageview);
         Button deleteProd = convertView.findViewById(R.id.button_delete);
 
         nameprod.setText(products_array.get(position).getName());
+        dateprod.setText(products_array.get(position).getCreatedAtString());
         Object tmpImage = products_array.get(position).getImage();
 
         if (tmpImage!=null){

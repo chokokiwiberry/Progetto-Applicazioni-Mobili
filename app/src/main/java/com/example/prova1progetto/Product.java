@@ -36,7 +36,15 @@ public class Product {
     @SerializedName("productId")
     private String productId;
 
+    private String createdAtString;
 
+    public String getCreatedAtString() {
+        return createdAtString;
+    }
+
+    public void setCreatedAtString(String createdAtString) {
+        this.createdAtString = createdAtString;
+    }
 
     public String getId() {
         return id;

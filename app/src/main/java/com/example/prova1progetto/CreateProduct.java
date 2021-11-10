@@ -2,7 +2,10 @@ package com.example.prova1progetto;
 
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -18,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -66,6 +70,7 @@ public class CreateProduct extends AppCompatActivity {
     private LAM_Api lam_api;
     private ImageView imageView;
 
+    private TextView barcodetext;
 
     private static final int CAMERA_PERM_CODE = 101;
 
@@ -81,11 +86,13 @@ public class CreateProduct extends AppCompatActivity {
         setContentView(R.layout.activity_createproduct);
         nametext = (EditText) findViewById(R.id.id_name);
         descriptiontext = (EditText) findViewById(R.id.id_description);
+        barcodetext = (TextView) findViewById(R.id.id_barcode);
         savebutton = (Button) findViewById(R.id.id_saveproduct);
         testswitch = (Switch) findViewById(R.id.id_test);
         takephotobutton = (Button) findViewById(R.id.id_takephoto);
         gallerybutton = (Button) findViewById(R.id.id_gallery);
         imageView = findViewById(R.id.id_imageview);
+
 
 
         Bundle extras = getIntent().getExtras();
@@ -94,6 +101,8 @@ public class CreateProduct extends AppCompatActivity {
             received_token = extras.getString("accessToken");
             received_sessiontoken = extras.getString("sessionToken");
         }
+
+        barcodetext.setText(received_barcode);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://lam21.iot-prism-lab.cs.unibo.it/") //l'url è stato cambiato
@@ -113,7 +122,6 @@ public class CreateProduct extends AppCompatActivity {
                             Log.d("diamond", "credo che non arrivi qui");
                             Bundle bundle = result.getData().getExtras();
                             Bitmap bitmap = (Bitmap) bundle.get("data");
-                           // imageView.setImageBitmap(bitmap);
                             Bitmap resizedImage = resizeBitmap(bitmap);
                             imageView.setImageBitmap(resizedImage);
                             encodedImage = encodeImage(resizedImage);
@@ -132,7 +140,7 @@ public class CreateProduct extends AppCompatActivity {
                     Bitmap resizedImage = resizeBitmap(selectedImage);
                     imageView.setImageBitmap(resizedImage);
                     encodedImage = encodeImage(resizedImage);
-                  //  encodedImage = encodeImage(selectedImage);
+
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -198,10 +206,31 @@ public class CreateProduct extends AppCompatActivity {
                     }
                     Log.d("diamond", String.valueOf(response.body()));
                     Log.d("diamond", "anananananannanana " + response.code());
-                    if (response.code() == 201) {
-                        //faccio partire un messaggio con l'anteprima oppure messaggio ok
-                        //reinderizzamento
-                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage("Product has been added!");
+                    builder.setCancelable(true);
+
+                    builder.setPositiveButton(
+                            "Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    builder.setNegativeButton(
+                            "Close",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder.create();
+                    alert11.show();
+
+                    Pantry();
+
                 }
 
                 @Override
@@ -229,7 +258,14 @@ public class CreateProduct extends AppCompatActivity {
         }
     }
 
+    public Context getContext() {
+        return (Context)this;
+    }
 
+    private void Pantry(){
+        Intent Pantry = new Intent(this, Pantry.class);
+        startActivity(Pantry);
+    }
 
 
 }

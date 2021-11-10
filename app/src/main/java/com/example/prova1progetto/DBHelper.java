@@ -86,15 +86,7 @@ public static final String TABLE_PRODUCTS = "grades";
                         obj.setName(cursor.getString(1));
                         obj.setDescription(cursor.getString(2));
                         obj.setImage(cursor.getString(3));
-                        String tmpDate = cursor.getString(4);
-                        SimpleDateFormat formatter1=new SimpleDateFormat("dd/MM/yyyy");
-                        Date tmpDateParsed = null;
-                        try {
-                            tmpDateParsed = formatter1.parse(tmpDate);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        obj.setCreatedAt(tmpDateParsed);
+                        obj.setCreatedAtString(cursor.getString(4));
 
                         list.add(obj);
                     } while (cursor.moveToNext());

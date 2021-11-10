@@ -31,8 +31,6 @@ public class Register extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
-
-    private String tmp_id;
     private LAM_Api lam_api;
 
     public void onCreate(@Nullable Bundle savedInstanceState){
@@ -53,7 +51,14 @@ public class Register extends AppCompatActivity {
 
         register_button.setOnClickListener(v -> {
             //fare il pacchetto e fare l'autenticazione
-            register();
+            if (username.getText().toString().trim().equals("")
+                    || email.getText().toString().trim().equals("")
+                    || password.getText().toString().trim().equals("") ){
+                Toast.makeText(this, "Please complete all the form!", Toast.LENGTH_SHORT).show();
+            }else{
+                register();
+            }
+
         });
     }
     private void register() {
@@ -72,11 +77,10 @@ public class Register extends AppCompatActivity {
                     }
                     //se tutto ok lo rimando a login
                     Toast.makeText(Register.this, "Now you can login!", Toast.LENGTH_SHORT).show();
-                    tmp_id = response.body().getId();
+
 
                     SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
                     editor.putString(MY_KEY, response.body().getId());
-                    //editor.putString(KEY_USERID, response.body().get)
                     editor.apply();
 
                     SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);

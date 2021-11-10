@@ -1,14 +1,22 @@
 package com.example.prova1progetto;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +34,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Pantry extends AppCompatActivity {
-    private static final String TAG = "cibo";
+
+    private static final int CAMERA_PERM_CODE = 101;
     private String barcode;
     EditText barcode_input;
     Button getButton;
@@ -40,6 +49,9 @@ public class Pantry extends AppCompatActivity {
 
     private String received_userId ="";
 
+    private ImageView scanBarcode;
+    private static final int CAMERA_REQUEST_CODE = 10;
+    private static final String[] CAMERA_PERMISSION = new String[]{Manifest.permission.CAMERA};
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,19 +63,23 @@ public class Pantry extends AppCompatActivity {
 
         localpantryButton = findViewById(R.id.id_checkPantry);
 
+        scanBarcode = findViewById(R.id.id_imageview_scanbarcode);
 
         getButton.setOnClickListener(v -> {
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 received_token = extras.getString("token");
+                barcode = barcode_input.getText().toString();
+
+                Intent Products = new Intent(this, Products.class);
+                Products.putExtra("barcode", barcode);
+                Products.putExtra("token", received_token);//per poter inviare questi dati all'altra activity
+                startActivity(Products);
+            } else{
+                Login();
             }
 
-            barcode = barcode_input.getText().toString();
 
-            Intent Products = new Intent(this, Products.class);
-            Products.putExtra("barcode", barcode);
-            Products.putExtra("token", received_token);//per poter inviare questi dati all'altra activity
-            startActivity(Products);
         });
 
 
@@ -76,6 +92,15 @@ public class Pantry extends AppCompatActivity {
 
         });
 
+        scanBarcode.setOnClickListener(v-> {
+        });
     }
+    private void Login(){
+        Intent Login = new Intent(this, Login.class);
+        startActivity(Login);
+    }
+
+
+
 
 }

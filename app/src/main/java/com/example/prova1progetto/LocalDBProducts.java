@@ -19,8 +19,10 @@ public class LocalDBProducts extends AppCompatActivity implements ProductInterfa
         dbh = new DBHelper(this);
         listview = findViewById(R.id.listview);
 
-
         productDBView.setProducts_array(dbh.getAllElements());
+
+
+
         listview.setAdapter(productDBView);
     }
 
@@ -40,7 +42,6 @@ public class LocalDBProducts extends AppCompatActivity implements ProductInterfa
 
     @Override
     public void deleteLocalProduct(String idProd) {
-        Log.d("cibo", "sono in localDBLOCALDB sono delete local");
         dbh.deleteProduct(idProd);
     }
 }

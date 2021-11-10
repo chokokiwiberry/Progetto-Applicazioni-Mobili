@@ -1,8 +1,11 @@
 package com.example.prova1progetto;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -11,18 +14,25 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 
 import org.w3c.dom.Text;
 
 import java.security.spec.ECField;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,12 +79,11 @@ public class Products extends AppCompatActivity implements ProductInterface {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listofproducts);
-        textViewResult = findViewById(R.id.text_view_result);
-        textViewResult.setMovementMethod(new ScrollingMovementMethod());
+
         addproduct = findViewById(R.id.id_addproduct);
         listview = findViewById(R.id.listview);
 
-        layout = findViewById(R.id.layoutlist);
+
         dbh = new DBHelper(this);
 
         //prendo il valore di userid da register
@@ -95,8 +104,6 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
         lam_api = retrofit.create(LAM_Api.class);
         getProducts(passed_Barcode);
-
-        //Log.d("cibo", "sono sessionToken " +  sessionToken);
 
 
         addproduct.setOnClickListener(v -> {
@@ -119,7 +126,29 @@ public class Products extends AppCompatActivity implements ProductInterface {
                 @Override
                 public void onResponse(Call<ListProducts> call, Response<ListProducts> response) {
                     if (!response.isSuccessful()) {
-                        textViewResult.setText("Code: " + response.code());
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setMessage("The call didn't work as expected...");
+                        builder.setCancelable(true);
+
+                        builder.setPositiveButton(
+                                "Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        builder.setNegativeButton(
+                                "Close",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        AlertDialog alert11 = builder.create();
+                        alert11.show();
+
                     }
 
                     tmp = response.body();
@@ -138,7 +167,29 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
                 @Override
                 public void onFailure(Call<ListProducts> call, Throwable t) {
-                    textViewResult.setText(t.toString());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage("The call failed! "+t.toString());
+                    builder.setCancelable(true);
+
+                    builder.setPositiveButton(
+                            "Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    builder.setNegativeButton(
+                            "Close",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder.create();
+                    alert11.show();
+
                 }
             });
 
@@ -168,16 +219,85 @@ public class Products extends AppCompatActivity implements ProductInterface {
                 @Override
                 public void onResponse(Call<Product> call, Response<Product> response) {
                     if (!response.isSuccessful()){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setMessage("The call didn't work as expected...");
+                        builder.setCancelable(true);
+
+                        builder.setPositiveButton(
+                                "Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        builder.setNegativeButton(
+                                "Close",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        AlertDialog alert11 = builder.create();
+                        alert11.show();
+
                         Log.d("palla", "nope rating nn ha funzionato");
+                        Log.d("palla", response.toString());
+                        return;
                     }
-                    Log.d("palla", "ha funzionato");
-                    Product res = response.body();
-                    Log.d("palla", String.valueOf(response.code()));
-                    Log.d("palla", "cipollinoèèèèè "+ res);
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage("Product has been rated!");
+                    builder.setCancelable(true);
+
+                    builder.setPositiveButton(
+                            "Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    builder.setNegativeButton(
+                            "Close",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder.create();
+                    alert11.show();
+
+
                 }
 
                 @Override
                 public void onFailure(Call<Product> call, Throwable t) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage("The call has failed");
+                    builder.setCancelable(true);
+
+                    builder.setPositiveButton(
+                            "Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    builder.setNegativeButton(
+                            "Close",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder.create();
+                    alert11.show();
+
 
                 }
             });
@@ -197,10 +317,54 @@ public class Products extends AppCompatActivity implements ProductInterface {
                     @Override
                     public void onResponse(Call<Product> call, Response<Product> response) {
                         if (!response.isSuccessful()){
-                            Log.d("palla", "nn hai cancellato scemooooo");
-                            Log.d("palla", String.valueOf(response.body()));
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder.setMessage("The call didn't work as expected...");
+                            builder.setCancelable(true);
+
+                            builder.setPositiveButton(
+                                    "Ok",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                            builder.setNegativeButton(
+                                    "Close",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                            AlertDialog alert11 = builder.create();
+                            alert11.show();
+
                             return;
                         }
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setMessage("Product has been deleted!");
+                        builder.setCancelable(true);
+
+                        builder.setPositiveButton(
+                                "Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        builder.setNegativeButton(
+                                "Close",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        AlertDialog alert11 = builder.create();
+                        alert11.show();
+
                         Product res = response.body();
                         Log.d("palla", "ecco hai cancellato " + res);
                         Log.d("palla", response.message());
@@ -209,6 +373,28 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
                     @Override
                     public void onFailure(Call<Product> call, Throwable t) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setMessage("The call failed! "+ t.toString());
+                        builder.setCancelable(true);
+
+                        builder.setPositiveButton(
+                                "Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        builder.setNegativeButton(
+                                "Close",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        AlertDialog alert11 = builder.create();
+                        alert11.show();
 
                     }
                 });
@@ -217,7 +403,6 @@ public class Products extends AppCompatActivity implements ProductInterface {
                 e.printStackTrace();
             }
         } else{
-            //fare una finestra dialogo da mostrare?
 
             Toast.makeText(this, "This product is not yours", Toast.LENGTH_SHORT).show();
         }
@@ -243,4 +428,8 @@ public class Products extends AppCompatActivity implements ProductInterface {
     public void deleteLocalProduct(String idProd) {
 
     }
+    public Context getContext() {
+        return (Context)this;
+    }
+
 }

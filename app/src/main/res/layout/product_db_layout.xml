@@ -12,29 +12,11 @@
         android:layout_gravity="right"
         android:src="@drawable/ic_baseline_image_24" />
 
-    <TextView
-        android:textColor="#000"
-        android:id="@+id/text_id"
-        android:layout_margin="10dp"
-        android:textSize="18dp"
-        android:text="Id"
-        android:textStyle="bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
+
 
     <TextView
         android:textColor="#000"
-        android:textStyle="bold"
-        android:id="@+id/namprod"
-        android:text="Name"
-        android:layout_margin="5dp"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:textColor="#000"
-        android:textStyle="bold"
         android:id="@+id/descriptionprod"
         android:text="Description"
         android:layout_margin="5dp"
@@ -43,16 +25,12 @@
         android:layout_height="wrap_content"/>
     <TextView
         android:textColor="#000"
-        android:textStyle="bold"
         android:id="@+id/dateprod"
         android:text="Date"
         android:layout_margin="5dp"
         android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
-
-
 
         <Button
             android:layout_margin="2dp"
@@ -61,7 +39,8 @@
             android:layout_weight="2"
             android:text="Delete"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_baseline_delete_24"/>
 
 
     <View

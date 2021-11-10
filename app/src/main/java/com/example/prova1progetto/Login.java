@@ -73,21 +73,22 @@ public class Login extends AppCompatActivity {
 
         loginbutton.setOnClickListener(v -> {
             String token = "";
-            token = Login();
-            if (token != "") { //tecnicamente deve controllare il vecchio token quindi fare l'accesso al db
-                // lo faccio entrare
-                //riceverà un token e se il token è scaduto, lo butto fuori e gli rifaccio fare il login
-                //altrimenti entra dentro
-                //dato che bisogna sempre controllare il token, glielo passo nella componente
+            if (emailtext.getText().toString().trim().equals("") || passwordtext.getText().toString().trim().equals("")){
+                Toast.makeText(this, "Please complete all the form!", Toast.LENGTH_SHORT).show();
+            }else{
+                token = Login();
+                if (token != "") { //tecnicamente deve controllare il vecchio token quindi fare l'accesso al db
+                    // lo faccio entrare
+                    //riceverà un token e se il token è scaduto, lo butto fuori e gli rifaccio fare il login
+                    //altrimenti entra dentro
+                    //dato che bisogna sempre controllare il token, glielo passo nella componente
 
-                Intent Pantry = new Intent(this, Pantry.class);
-                Pantry.putExtra("userId", userId);
-                Pantry.putExtra("token", token);
-                startActivity(Pantry);
+                    Intent Pantry = new Intent(this, Pantry.class);
+                    Pantry.putExtra("userId", userId);
+                    Pantry.putExtra("token", token);
+                    startActivity(Pantry);
+                }
             }
-
-
-            //se fa click su questo button, allora gli faccio caricare il layout del pantry
 
         });
     }
