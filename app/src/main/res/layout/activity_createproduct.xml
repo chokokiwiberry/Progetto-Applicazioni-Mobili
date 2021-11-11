@@ -53,26 +53,29 @@
 
 
     <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
         android:layout_gravity="center"
-        >
+        android:orientation="horizontal"
+       >
+
         <Button
             android:id="@+id/id_takephoto"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Take a picture"
-            android:drawableLeft="@drawable/ic_baseline_camera_alt_24"/>
+           />
+
         <Button
             android:id = "@+id/id_gallery"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text ="Gallery"
-            android:drawableLeft="@drawable/ic_baseline_image_24"/>
+            android:layout_weight="1"
+            android:text="Gallery"
+            />
 
     </LinearLayout>
-
 
     <ImageView
         android:id="@+id/id_imageview"
@@ -80,9 +83,7 @@
         android:layout_height="150dp"
         android:layout_gravity="center"
         app:srcCompat="@drawable/ic_baseline_image_24" />
-
-
-
+    
     <Button
         android:id="@+id/id_saveproduct"
         android:layout_width="wrap_content"
@@ -98,8 +99,5 @@
         android:layout_marginBottom="124dp"
         android:text="Test"
   />
-
-
-
 
 </LinearLayout>
