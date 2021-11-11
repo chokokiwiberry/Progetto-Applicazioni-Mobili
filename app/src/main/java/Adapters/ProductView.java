@@ -86,11 +86,13 @@ public class ProductView extends BaseAdapter {
         barcodeProduct.setText(products_array.get(position).getBarcode());
         nameProduct.setText(products_array.get(position).getName());
         descriptionProduct.setText(products_array.get(position).getDescription());
-       Object tmp = products_array.get(position).getImage();
+        Object tmp = products_array.get(position).getImage();
 
         if (tmp!=null){
           Bitmap image = decodeImage(tmp.toString());
           imageProduct.setImageBitmap(image);
+        } else{
+            imageProduct.setImageBitmap(null);
         }
 
 
@@ -111,16 +113,22 @@ public class ProductView extends BaseAdapter {
             } else{
                 data = products_array.get(position).getImage().toString();
             }
-            productInterface.saveProduct(
+            productInterface.saveLocalProduct(
                     products_array.get(position).getName(),
                     products_array.get(position).getDescription(),
                     data,
                     products_array.get(position).getCreatedAt().toString()
             );
+            products_array.add(products_array.get(position));
+            this.setProducts_array(products_array);
+            this.notifyDataSetChanged();
         });
 
         deleteproduct.setOnClickListener(v->{
             productInterface.deleteProduct(products_array.get(position).getId(), products_array.get(position).getUserId());
+            products_array.remove(products_array.get(position));
+            this.setProducts_array(products_array);
+            this.notifyDataSetChanged();
         });
         return convertView;
     }

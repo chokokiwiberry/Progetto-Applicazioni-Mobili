@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import androidx.constraintlayout.solver.PriorityGoalRow;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +16,7 @@ import POJO.Product;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-public static final String TABLE_PRODUCTS = "grades";
+public static final String TABLE_PRODUCTS = "products";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_DESCRIPTION = "description";
@@ -103,5 +105,49 @@ public static final String TABLE_PRODUCTS = "grades";
         getWritableDatabase().delete(TABLE_PRODUCTS, COLUMN_ID + "=?",
                 new String[] { String.valueOf(id) });
     }
+
+    public Cursor getProductsName(String prodname) {
+        return getWritableDatabase().query(TABLE_PRODUCTS, null, COLUMN_NAME + "=?",
+                new String[] { prodname }, null, null, null);
+    }
+    public List<Product> getProds(String prodname) {
+
+        List<Product> list = new ArrayList<Product>();
+
+        // Select All Query
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        try {
+
+            Cursor cursor = getProductsName(prodname);
+            try {
+
+                if (cursor.moveToFirst()) {
+                    do {
+                        Product obj = new Product();
+                        //only one column
+                        obj.setId(cursor.getString(0));
+                        obj.setName(cursor.getString(1));
+                        obj.setDescription(cursor.getString(2));
+                        obj.setImage(cursor.getString(3));
+                        obj.setCreatedAtString(cursor.getString(4));
+
+                        list.add(obj);
+                    } while (cursor.moveToNext());
+                }
+
+            } finally {
+                try { cursor.close(); } catch (Exception ignore) {}
+            }
+
+        } finally {
+            try { db.close(); } catch (Exception ignore) {}
+        }
+
+        return list;
+    }
+
+
 
 }

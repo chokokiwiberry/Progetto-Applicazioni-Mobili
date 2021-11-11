@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
@@ -76,10 +77,13 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
         dbh = new DBHelper(this);
 
-        //prendo il valore di userid da register
-        SharedPreferences prefs = getApplicationContext().getSharedPreferences("USERID", Context.MODE_PRIVATE);
-        userId = prefs.getString("userid", "");//"No name defined" is the default value.
-        Log.d("diamond2", prefs.getString("userid", ""));
+
+
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        userId = preferences.getString("userid", "");
+        Log.d("diamond2", "volaaaare "+userId);
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -101,6 +105,7 @@ public class Products extends AppCompatActivity implements ProductInterface {
             createProduct.putExtra("sessionToken", sessionToken);
             createProduct.putExtra("accessToken", received_token); //bearer Token
             createProduct.putExtra("barcode", passed_Barcode);
+            createProduct.putExtra("classFrom",  "Products");
             startActivity(createProduct);
 
         });
@@ -394,7 +399,7 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
 
     @Override
-    public void saveProduct(String prod_name, String prod_desc, String prod_img, String prod_date) {
+    public void saveLocalProduct(String prod_name, String prod_desc, String prod_img, String prod_date) {
         DBHelper dbh = new DBHelper(getApplicationContext());
         long code = dbh.insertNewProduct(prod_name, prod_desc, prod_img, prod_date);
         if (code != -1)
@@ -411,5 +416,6 @@ public class Products extends AppCompatActivity implements ProductInterface {
     public Context getContext() {
         return (Context)this;
     }
+
 
 }

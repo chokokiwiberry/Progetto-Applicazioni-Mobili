@@ -24,28 +24,56 @@
         android:layout_height="2dp"
         android:background="#c0c0c0"
         />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        >
 
-        <EditText
-            android:id="@+id/id_searchproduct"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_baseline_search_24"
-            android:hint="Search for your product"
-            android:textColor="@android:color/black" />
-        <Button
-            android:id="@+id/btn_searchproduct"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:text="Search">
+            android:orientation="horizontal"
+            android:layout_gravity="right">
+            <Button
+                android:id="@+id/addproductdb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Product">
+            </Button>
 
-        </Button>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <EditText
+                android:id="@+id/id_searchproduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Search for your product"
+                android:textColor="@android:color/black"
+                android:drawableLeft="@drawable/ic_baseline_search_24"/>
+            <Button
+                android:id="@+id/btn_searchproduct"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:text="Search">
+
+            </Button>
+        </LinearLayout>
     </LinearLayout>
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"

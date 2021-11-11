@@ -44,6 +44,14 @@
         android:hint="Insert description"
         android:inputType="text"
         />
+    <EditText
+        android:id="@+id/id_dateexpire"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Expire Date"
+        android:inputType="text"
+        />
 
     <TextView
         android:id="@+id/id_barcode"
@@ -83,12 +91,19 @@
         android:layout_height="150dp"
         android:layout_gravity="center"
         app:srcCompat="@drawable/ic_baseline_image_24" />
-    
+
     <Button
         android:id="@+id/id_saveproduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
+        android:layout_gravity="right"
+        android:drawableLeft="@drawable/ic_baseline_save_24"/>
+    <Button
+        android:id="@+id/savelocally"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Local"
         android:layout_gravity="right"
         android:drawableLeft="@drawable/ic_baseline_save_24"/>
 

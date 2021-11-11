@@ -43,10 +43,11 @@
             android:layout_margin="2dp"
             android:background="#D32F2F"
             android:id="@+id/button_delete"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:text="Delete"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:drawableLeft="@drawable/ic_baseline_delete_24"/>
 
 

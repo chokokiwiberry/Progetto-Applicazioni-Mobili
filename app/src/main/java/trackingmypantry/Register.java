@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +31,7 @@ public class Register extends AppCompatActivity {
     EditText username, email, password;
 
     String PREF_NAME = "userid";
-    String MY_KEY = "";
+    String MY_KEY = "user_id";
 
     SharedPreferences sharedPreferences;
 
@@ -45,7 +46,7 @@ public class Register extends AppCompatActivity {
         email = (EditText) findViewById(R.id.id_email_register);
         password = (EditText) findViewById(R.id.id_password_register);
 
-        sharedPreferences = getSharedPreferences("USERID", Context.MODE_PRIVATE);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://lam21.iot-prism-lab.cs.unibo.it/") //l'url è stato cambiato
                 .addConverterFactory(GsonConverterFactory.create())
@@ -81,14 +82,14 @@ public class Register extends AppCompatActivity {
                     //se tutto ok lo rimando a login
                     Toast.makeText(Register.this, "Now you can login!", Toast.LENGTH_SHORT).show();
 
-
-                    SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
-                    editor.putString(MY_KEY, response.body().getId());
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("userid",response.body().getId());
                     editor.apply();
 
-                    SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                    String useridtmp = prefs.getString("userid", "No name defined");
-                    Log.d("fire", "sono useridtmp sharedpreferecend di resiter gnnna "+useridtmp);//"No name defined" is the default value.
+
+                    String name = preferences.getString("userid", "");
+                    Log.d("diamond2", "sono useridtmp sharedpreferecend di resiter gnnna "+name);//"No name defined" is the default value.
                     Login();
                 }
 
@@ -106,5 +107,8 @@ public class Register extends AppCompatActivity {
         Intent Login = new Intent(this, Login.class);
         startActivity(Login);
 
+    }
+    public Context getContext() {
+        return (Context)this;
     }
 }
