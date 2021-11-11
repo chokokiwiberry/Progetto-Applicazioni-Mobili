@@ -18,6 +18,8 @@
         android:paddingBottom="45dp"
         android:text="Welcome to Tracking your pantry!"
         android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
        >
     </TextView>
 

@@ -14,8 +14,10 @@
         android:layout_gravity="center"
         android:fontFamily="cursive"
         android:paddingTop="45dp"
-        android:text="Tracking your pantry!"
+        android:text="@string/header_app"
         android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         >
     </TextView>
     <LinearLayout
