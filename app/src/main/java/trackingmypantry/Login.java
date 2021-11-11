@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.trackingmypantry.R;
+import com.trackingmypantry.R;
 
 import java.util.HashMap;
 import java.util.Map;

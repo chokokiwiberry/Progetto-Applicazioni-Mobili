@@ -31,7 +31,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
-import com.example.trackingmypantry.R;
+import com.trackingmypantry.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;

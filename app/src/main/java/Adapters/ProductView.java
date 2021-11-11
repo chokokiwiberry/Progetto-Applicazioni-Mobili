@@ -15,7 +15,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import Interfaces.ProductInterface;
-import com.example.trackingmypantry.R;
+import com.trackingmypantry.R;
 
 import java.util.List;
 
