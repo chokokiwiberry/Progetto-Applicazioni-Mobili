@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Prova1progetto">
+        android:theme="@style/Theme.TrackingMyPantry">
         <activity android:name="trackingmypantry.Pantry"
             android:screenOrientation="portrait"/>
         <activity android:name="trackingmypantry.Register"
