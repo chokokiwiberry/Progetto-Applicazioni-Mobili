@@ -35,7 +35,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 //Logica per chiamate GET
 //Logica per chiamata POSTPREFERENCE
-//Logica per DELETE DEL SINGOLO PRODOTTO
+//Logica per SAVE DEL SINGOLO PRODOTTO
 public class Products extends AppCompatActivity implements ProductInterface {
     private LAM_Api lam_api;
 
@@ -65,6 +65,8 @@ public class Products extends AppCompatActivity implements ProductInterface {
     ProductView productview = new ProductView(Products.this, this);
     private static DBHelper dbh;
 
+    private Boolean deletedone = false;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,11 +80,8 @@ public class Products extends AppCompatActivity implements ProductInterface {
         dbh = new DBHelper(this);
 
 
-
-
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         userId = preferences.getString("userid", "");
-        Log.d("diamond2", "volaaaare "+userId);
 
 
         Bundle extras = getIntent().getExtras();
@@ -143,17 +142,19 @@ public class Products extends AppCompatActivity implements ProductInterface {
                         AlertDialog alert11 = builder.create();
                         alert11.show();
 
+                    } else{
+                        tmp = response.body();
+
+                        productview.setProducts_array(tmp.getProducts());
+                        listview.setAdapter(productview);
+
+
+
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("session_token",response.body().getToken());
+                        editor.apply();
                     }
-
-                    tmp = response.body();
-
-                    productview.setProducts_array(tmp.getProducts());
-                    listview.setAdapter(productview);
-
-
-                    SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME1, MODE_PRIVATE).edit();
-                    editor.putString(MY_KEY1, response.body().getToken());
-                    editor.apply();
                 }
 
                 @Override
@@ -187,11 +188,15 @@ public class Products extends AppCompatActivity implements ProductInterface {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME1, Context.MODE_PRIVATE);
-        String myData = sharedPreferences.getString(MY_KEY1, "");
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String myData = preferences.getString("session_token", "");
 
         sessionToken = myData;
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -210,85 +215,20 @@ public class Products extends AppCompatActivity implements ProductInterface {
                 @Override
                 public void onResponse(Call<Product> call, Response<Product> response) {
                     if (!response.isSuccessful()){
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setMessage("The call didn't work as expected...");
-                        builder.setCancelable(true);
-
-                        builder.setPositiveButton(
-                                "Ok",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        builder.setNegativeButton(
-                                "Close",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        AlertDialog alert11 = builder.create();
-                        alert11.show();
+                        AlertDialogFun("The call didn't work as expected..."+response.toString());
 
                         Log.d("palla", "nope rating nn ha funzionato");
                         Log.d("palla", response.toString());
                         return;
                     }
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage("Product has been rated!");
-                    builder.setCancelable(true);
-
-                    builder.setPositiveButton(
-                            "Ok",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                    builder.setNegativeButton(
-                            "Close",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                    AlertDialog alert11 = builder.create();
-                    alert11.show();
-
+                    AlertDialogFun("The product has been rated!");
 
                 }
 
                 @Override
                 public void onFailure(Call<Product> call, Throwable t) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage("The call has failed");
-                    builder.setCancelable(true);
-
-                    builder.setPositiveButton(
-                            "Ok",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                    builder.setNegativeButton(
-                            "Close",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                    AlertDialog alert11 = builder.create();
-                    alert11.show();
-
+                    AlertDialogFun("The call has failed..."+ t.toString());
 
                 }
             });
@@ -298,7 +238,8 @@ public class Products extends AppCompatActivity implements ProductInterface {
     }
 
     @Override
-    public void deleteProduct(String idProd, String idUser) {
+    public boolean deleteProduct(String idProd, String idUser) {
+
         Log.d("diamond2", "sono di products " +userId);
         Log.d("diamond2", "sono stato  passato " + idUser);
         if (idUser.equals(userId)){
@@ -308,82 +249,19 @@ public class Products extends AppCompatActivity implements ProductInterface {
                     @Override
                     public void onResponse(Call<Product> call, Response<Product> response) {
                         if (!response.isSuccessful()){
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                            builder.setMessage("The call didn't work as expected...");
-                            builder.setCancelable(true);
-
-                            builder.setPositiveButton(
-                                    "Ok",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-
-                            builder.setNegativeButton(
-                                    "Close",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-
-                            AlertDialog alert11 = builder.create();
-                            alert11.show();
-
+                            AlertDialogFun("The call didn't work as expected...");
                             return;
                         }
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setMessage("Product has been deleted!");
-                        builder.setCancelable(true);
+                        deletedone = true;
 
-                        builder.setPositiveButton(
-                                "Ok",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        builder.setNegativeButton(
-                                "Close",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        AlertDialog alert11 = builder.create();
-                        alert11.show();
+                        AlertDialogFun("Product has been deleted!");
 
 
                     }
 
                     @Override
                     public void onFailure(Call<Product> call, Throwable t) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setMessage("The call failed! "+ t.toString());
-                        builder.setCancelable(true);
-
-                        builder.setPositiveButton(
-                                "Ok",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        builder.setNegativeButton(
-                                "Close",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        AlertDialog alert11 = builder.create();
-                        alert11.show();
-
+                        AlertDialogFun("The call failed! "+ t.toString());
                     }
                 });
 
@@ -394,7 +272,7 @@ public class Products extends AppCompatActivity implements ProductInterface {
             Toast.makeText(this, "This product is not yours", Toast.LENGTH_SHORT).show();
         }
 
-
+    return deletedone;
     }
 
 
@@ -417,5 +295,29 @@ public class Products extends AppCompatActivity implements ProductInterface {
         return (Context)this;
     }
 
+    private void AlertDialogFun(String msg){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(msg);
+        builder.setCancelable(true);
+
+        builder.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        builder.setNegativeButton(
+                "Close",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder.create();
+        alert11.show();
+    }
 
 }

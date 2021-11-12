@@ -55,13 +55,21 @@ public class LocalDBProducts extends AppCompatActivity implements ProductInterfa
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        productDBView.setProducts_array(dbh.getAllElements());
+        listview.setAdapter(productDBView);
+
+    }
+
+    @Override
     public void postRank(float rank, String idProd) {
 
     }
 
     @Override
-    public void deleteProduct(String idProd, String userId) {
-
+    public boolean deleteProduct(String idProd, String userId) {
+        return false;
     }
 
 

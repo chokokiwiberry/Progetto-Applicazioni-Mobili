@@ -125,10 +125,11 @@ public class ProductView extends BaseAdapter {
         });
 
         deleteproduct.setOnClickListener(v->{
-            productInterface.deleteProduct(products_array.get(position).getId(), products_array.get(position).getUserId());
-            products_array.remove(products_array.get(position));
-            this.setProducts_array(products_array);
-            this.notifyDataSetChanged();
+            if (productInterface.deleteProduct(products_array.get(position).getId(), products_array.get(position).getUserId())) {
+                products_array.remove(products_array.get(position));
+                this.setProducts_array(products_array);
+                this.notifyDataSetChanged();
+            }
         });
         return convertView;
     }

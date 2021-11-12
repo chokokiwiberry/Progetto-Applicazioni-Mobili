@@ -19,6 +19,7 @@ import java.util.List;
 
 import POJO.Product;
 
+
 //adapter per vedere i prodotti in locale
 public class ProductDBView  extends BaseAdapter {
     private List<Product> products_array;
@@ -34,6 +35,10 @@ public class ProductDBView  extends BaseAdapter {
     }
 
     public void setProducts_array(List<Product> products_array) {
+        this.products_array = products_array;
+    }
+
+    public void updateProducts_array(List<Product> products_array){
         this.products_array = products_array;
     }
 
@@ -69,8 +74,13 @@ public class ProductDBView  extends BaseAdapter {
         Object tmpImage = products_array.get(position).getImage();
 
         if (tmpImage!=null){
-            Bitmap image = decodeImage(tmpImage.toString());
-            imageprod.setImageBitmap(image);
+            if (IsBase64Encoded(tmpImage.toString())){
+                Bitmap image = decodeImage(tmpImage.toString());
+                imageprod.setImageBitmap(image);
+            } else{
+                imageprod.setImageBitmap(null);
+            }
+
         }
 
         descriptionprod.setText(products_array.get(position).getDescription());
@@ -94,4 +104,16 @@ public class ProductDBView  extends BaseAdapter {
         Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
         return decodedBitmap;
     }
+
+    private boolean IsBase64Encoded(String value)
+    {
+        try {
+            byte[] decodedString = Base64.decode(value, Base64.DEFAULT);
+            BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

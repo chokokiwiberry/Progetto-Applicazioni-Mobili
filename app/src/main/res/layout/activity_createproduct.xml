@@ -53,10 +53,16 @@
         android:inputType="text"
         />
 
-    <TextView
+
+    <EditText
         android:id="@+id/id_barcode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ems="10"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
       />
 
 
@@ -92,20 +98,93 @@
         android:layout_gravity="center"
         app:srcCompat="@drawable/ic_baseline_image_24" />
 
-    <Button
-        android:id="@+id/id_saveproduct"
-        android:layout_width="wrap_content"
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Save"
-        android:layout_gravity="right"
-        android:drawableLeft="@drawable/ic_baseline_save_24"/>
-    <Button
-        android:id="@+id/savelocally"
-        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/id_saveproduct"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_gravity="right"
+            android:drawableLeft="@drawable/ic_baseline_save_24"/>
+
+        <Button
+            android:id = "@+id/viewproducts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Products"
+            />
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Local"
-        android:layout_gravity="right"
-        android:drawableLeft="@drawable/ic_baseline_save_24"/>
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/orText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Or"
+            android:textColor="@color/black"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_toLeftOf="@id/orText"
+            android:background="#c0c0c0"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@id/orText"
+            />
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/savelocally"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Save Local"
+            android:layout_gravity="right"
+            android:drawableLeft="@drawable/ic_baseline_save_24"/>
+
+        <Button
+            android:id = "@+id/viewpantry"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Pantry"
+            />
+
+    </LinearLayout>
+
 
     <Switch
         android:id="@+id/id_test"

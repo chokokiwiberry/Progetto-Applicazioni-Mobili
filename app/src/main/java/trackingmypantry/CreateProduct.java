@@ -67,20 +67,20 @@ public class CreateProduct extends AppCompatActivity  {
     private String received_barcode;
     private String received_classfrom;
     private Button takephotobutton;
+    private Button viewProducts, viewPantry;
     private LAM_Api lam_api;
     private ImageView imageView;
+    private EditText dateprod;
 
-    private TextView barcodetext;
+    private EditText barcodetext;
 
     private static final int CAMERA_PERM_CODE = 101;
 
     ActivityResultLauncher<String> getGalleryContent;
     ActivityResultLauncher<Intent> launchCamera;
 
-    String encodedImage = null;
+    String encodedImage;
 
-    //variabile che indica se l'utente abbia cliccato per la chiusura della finestra dialog
-    Boolean clickedDialog = false;
 
     private static DBHelper dbh;
     private Button savelocallybutton;
@@ -91,13 +91,17 @@ public class CreateProduct extends AppCompatActivity  {
         setContentView(R.layout.activity_createproduct);
         nametext = (EditText) findViewById(R.id.id_name);
         descriptiontext = (EditText) findViewById(R.id.id_description);
-        barcodetext = (TextView) findViewById(R.id.id_barcode);
+        barcodetext = (EditText) findViewById(R.id.id_barcode);
+        dateprod = (EditText)findViewById(R.id.id_dateexpire);
         savebutton = (Button) findViewById(R.id.id_saveproduct);
         testswitch = (Switch) findViewById(R.id.id_test);
         takephotobutton = (Button) findViewById(R.id.id_takephoto);
         gallerybutton = (Button) findViewById(R.id.id_gallery);
         imageView = findViewById(R.id.id_imageview);
         savelocallybutton = findViewById(R.id.savelocally);
+        
+        viewPantry = findViewById(R.id.viewpantry);
+        viewProducts = findViewById(R.id.viewproducts);
 
 
 
@@ -131,7 +135,7 @@ public class CreateProduct extends AppCompatActivity  {
                             Bitmap resizedImage = resizeBitmap(bitmap);
                             imageView.setImageBitmap(resizedImage);
                             encodedImage = encodeImage(resizedImage);
-                            Log.d("encezz", encodedImage);
+
                         }
                     }
                 });
@@ -147,7 +151,7 @@ public class CreateProduct extends AppCompatActivity  {
                     Bitmap resizedImage = resizeBitmap(selectedImage);
                     imageView.setImageBitmap(resizedImage);
                     encodedImage = encodeImage(resizedImage);
-                    Log.d("encezz", encodedImage);
+
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -167,7 +171,14 @@ public class CreateProduct extends AppCompatActivity  {
         savelocallybutton.setOnClickListener(v->{
             saveDBProduct();
         });
-
+        
+        viewPantry.setOnClickListener(v->{
+            LocalProducts();
+        });
+        
+        viewProducts.setOnClickListener(v->{
+            viewProductsList();
+        });
 
     }
 
@@ -194,14 +205,13 @@ public class CreateProduct extends AppCompatActivity  {
 
     private void saveProduct() {
         if (received_classfrom.equals("Products")){
-            Log.d("miao", "provengo da products");
             try {
                 Map<String, Object> postData = new HashMap<>();
                 postData.put("token", received_sessiontoken);
                 postData.put("name", this.nametext.getText().toString());
                 postData.put("description", this.descriptiontext.getText().toString());
-                postData.put("barcode", received_barcode); //credo che non farò inserire il barcode dall'utente - che venga letto da camera o meno
-                postData.put("test", testswitch.isChecked()); //quando ci sarà la versione finale, questo sarà sempre di default falso
+                postData.put("barcode", received_barcode);
+                postData.put("test", testswitch.isChecked());
                 if (encodedImage != null){
                     postData.put("img", encodedImage);
                 }
@@ -212,65 +222,13 @@ public class CreateProduct extends AppCompatActivity  {
                         if (!response.isSuccessful()) {
                             return;
                         }
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setMessage("Product has been added!");
-                        builder.setCancelable(true);
-
-                        builder.setPositiveButton(
-                                "Ok",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        clickedDialog = true;
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        builder.setNegativeButton(
-                                "Close",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        clickedDialog = true;
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        AlertDialog alert11 = builder.create();
-                        alert11.show();
-
-                        if(clickedDialog){
-                            Pantry();
-                        }
-
-
+                        AlertDialogFun("Product has been added!");
+                        
                     }
 
                     @Override
                     public void onFailure(Call<Product> call, Throwable t) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setMessage("The call has failed!");
-                        builder.setCancelable(true);
-
-                        builder.setPositiveButton(
-                                "Ok",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        clickedDialog = true;
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        builder.setNegativeButton(
-                                "Close",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        clickedDialog = true;
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        AlertDialog alert11 = builder.create();
-                        alert11.show();
+                        AlertDialogFun(t.toString());
                     }
                 });
 
@@ -300,20 +258,63 @@ public class CreateProduct extends AppCompatActivity  {
         return (Context)this;
     }
 
-    private void Pantry(){
-        Intent Pantry = new Intent(this, Pantry.class);
-        startActivity(Pantry);
+    private void LocalProducts(){
+        Intent LocalDb = new Intent(this, LocalDBProducts.class);
+        startActivity(LocalDb);
+    }
+    
+    private void viewProductsList(){
+        Intent Prods = new Intent(this, Products.class);
+        startActivity(Prods);
     }
 
     private void saveDBProduct(){
-        if (received_classfrom.equals("LocalDBProducts")){
-            //Inserisco nel database Locale
-            long code = dbh.insertNewProduct("provalocal", "proav", "prova img", "proava date");
+        String tmpimg = null;
+
+        DBHelper dbh = new DBHelper(getApplicationContext());
+        if (nametext.getText().toString().equals("") &&  descriptiontext.getText().toString().equals("")
+        && encodedImage == null){
+            Toast.makeText(getApplicationContext(), "Please insert a name, description and image", Toast
+            .LENGTH_LONG).show();
+
+        }else{
+            long code = dbh.insertNewProduct(nametext.getText().toString(), descriptiontext.getText().toString(),
+                    encodedImage, dateprod.getText().toString());
             if (code != -1)
                 Toast.makeText(getApplicationContext(), "Product saved successfully!",
                         Toast.LENGTH_LONG).show();
             finish();
-
         }
+        Toast.makeText(getApplicationContext(), "The product has not been added...Try again!",
+                Toast.LENGTH_LONG).show();
+        return;
+       
+
+    }
+    private void AlertDialogFun (String msg){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(msg);
+        builder.setCancelable(true);
+
+        builder.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.cancel();
+                    }
+                });
+
+        builder.setNegativeButton(
+                "Close",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder.create();
+        alert11.show();
     }
 }

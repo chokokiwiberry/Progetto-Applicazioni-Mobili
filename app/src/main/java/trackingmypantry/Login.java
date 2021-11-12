@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,13 +35,11 @@ public class Login extends AppCompatActivity {
     User userlogged;
     DBHelper DB;
 
-    String PREF_NAME = "token";
-    String MY_KEY = "";
-
-    SharedPreferences sharedPreferences;
 
 
 
+
+    private String token;
 
     private String userId;
 
@@ -54,11 +53,6 @@ public class Login extends AppCompatActivity {
         passwordtext = (EditText) findViewById(R.id.id_password);
         loginbutton = (Button) findViewById(R.id.id_login);
 
-        sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-
-        //prendo il valore di userid da register
-        SharedPreferences prefs = getApplicationContext().getSharedPreferences("USERID", Context.MODE_PRIVATE);
-        userId = prefs.getString("userid", "");//"No name defined" is the default value.
 
 
 
@@ -71,28 +65,17 @@ public class Login extends AppCompatActivity {
 
 
         loginbutton.setOnClickListener(v -> {
-            String token = "";
+
             if (emailtext.getText().toString().trim().equals("") || passwordtext.getText().toString().trim().equals("")){
                 Toast.makeText(this, "Please complete all the form!", Toast.LENGTH_SHORT).show();
             }else{
-                token = Login();
-                if (token != "") { //tecnicamente deve controllare il vecchio token quindi fare l'accesso al db
-                    // lo faccio entrare
-                    //riceverà un token e se il token è scaduto, lo butto fuori e gli rifaccio fare il login
-                    //altrimenti entra dentro
-                    //dato che bisogna sempre controllare il token, glielo passo nella componente
-
-                    Intent Pantry = new Intent(this, Pantry.class);
-                    Pantry.putExtra("userId", userId);
-                    Pantry.putExtra("token", token);
-                    startActivity(Pantry);
-                }
+                Login();
             }
 
         });
     }
 
-    private String Login() {
+    private void Login() {
         this.userlogged = new User(this.emailtext.getText().toString(), this.passwordtext.getText().toString());
         try {
             Map<String, String> postData = new HashMap<>();
@@ -104,23 +87,25 @@ public class Login extends AppCompatActivity {
                 public void onResponse(Call<User> call, Response<User> response) {
 
                     if (!response.isSuccessful()) {
-                        textviewResult.setText("prova response" + response.code());
-                        return;
-                    }
-                    if (response.code() == 401) {
-                        //rifare il login
+                        if (response.code() == 401) {
+                           return;
+                        }
+                    } else{
+
+                        userlogged.setToken(response.body().getToken());
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("token", response.body().getToken());
+                        editor.apply();
+
+                        Pantry();
                     }
 
-                    userlogged.setToken(response.body().getToken());
-                    SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
-                    editor.putString(MY_KEY, response.body().getToken());
-                    //editor.putString(KEY_USERID, response.body().get)
-                    editor.apply();
                 }
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    textviewResult.setText(t.getMessage());
+                    Log.d("diamond4", "haifalato");
                 }
 
             });
@@ -130,10 +115,19 @@ public class Login extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        String myData = sharedPreferences.getString(MY_KEY, "");
+    }
+    public Context getContext() {
+        return (Context)this;
+    }
 
-        return myData;
+    private void Pantry(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        token = preferences.getString("token", "");
+        userId = preferences.getString("userid", "");
+        Intent Pantry = new Intent(this, Pantry.class);
+        Pantry.putExtra("userId", userId);
+        Pantry.putExtra("token", token);
+        startActivity(Pantry);
     }
 }
 

@@ -30,10 +30,8 @@ public class Register extends AppCompatActivity {
     Button register_button;
     EditText username, email, password;
 
-    String PREF_NAME = "userid";
-    String MY_KEY = "user_id";
 
-    SharedPreferences sharedPreferences;
+
 
     private LAM_Api lam_api;
 
@@ -45,6 +43,7 @@ public class Register extends AppCompatActivity {
         username = (EditText) findViewById(R.id.id_username);
         email = (EditText) findViewById(R.id.id_email_register);
         password = (EditText) findViewById(R.id.id_password_register);
+
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -76,21 +75,21 @@ public class Register extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     if (!response.isSuccessful()) {
-                        Toast.makeText(Register.this, "Try again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Register.this, "Try again", Toast.LENGTH_LONG).show();
                         return;
+                    } else{
+                        //se tutto ok lo rimando a login
+                        Toast.makeText(Register.this, "Now you can login!", Toast.LENGTH_LONG).show();
+
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("userid",response.body().getId());
+                        editor.apply();
+
+
+                        Login();
                     }
-                    //se tutto ok lo rimando a login
-                    Toast.makeText(Register.this, "Now you can login!", Toast.LENGTH_SHORT).show();
 
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("userid",response.body().getId());
-                    editor.apply();
-
-
-                    String name = preferences.getString("userid", "");
-                    Log.d("diamond2", "sono useridtmp sharedpreferecend di resiter gnnna "+name);//"No name defined" is the default value.
-                    Login();
                 }
 
                 @Override

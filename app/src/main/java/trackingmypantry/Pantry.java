@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -57,6 +58,7 @@ public class Pantry extends AppCompatActivity {
         getButton.setOnClickListener(v -> {
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
+                Log.d("diamond4", "sono token: "+received_token);
                 received_token = extras.getString("token");
                 if (barcode_input.getText().toString().equals("")){
                     barcode = scannedbarcode;

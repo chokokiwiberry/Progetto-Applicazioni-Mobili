@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        register_button = findViewById(R.id.id_register); // bisogna fare attenzione agli id giusti da passare
+        register_button = findViewById(R.id.id_register);
         login_button = findViewById(R.id.id_login_text);
         register_button.setOnClickListener(v -> {
             Intent register = new Intent(this, Register.class);

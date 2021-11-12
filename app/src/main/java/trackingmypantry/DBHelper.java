@@ -114,19 +114,16 @@ public static final String TABLE_PRODUCTS = "products";
 
         List<Product> list = new ArrayList<Product>();
 
-        // Select All Query
-
 
         SQLiteDatabase db = this.getReadableDatabase();
         try {
-
             Cursor cursor = getProductsName(prodname);
             try {
 
                 if (cursor.moveToFirst()) {
                     do {
                         Product obj = new Product();
-                        //only one column
+                
                         obj.setId(cursor.getString(0));
                         obj.setName(cursor.getString(1));
                         obj.setDescription(cursor.getString(2));
