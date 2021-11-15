@@ -100,14 +100,12 @@ public class ProductView extends BaseAdapter {
        ratingproduct.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
            @Override
            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-               Log.d("palla", "ma perch");
                productInterface.postRank(rating, products_array.get(position).getId());
 
            }
        });
         saveproduct.setOnClickListener(v->{
             String data;
-            Log.d("ciboo", "ma is spero che funzioni?");
             if (products_array.get(position).getImage()==null){
                 data = "null";
             } else{

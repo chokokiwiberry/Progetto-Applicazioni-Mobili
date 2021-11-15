@@ -111,6 +111,8 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
     }
 
+
+
     private void getProducts(String barcode) {
         try {
             Call<ListProducts> call = lam_api.getProducts("Bearer " + received_token, barcode);
@@ -119,29 +121,7 @@ public class Products extends AppCompatActivity implements ProductInterface {
                 @Override
                 public void onResponse(Call<ListProducts> call, Response<ListProducts> response) {
                     if (!response.isSuccessful()) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setMessage("The call didn't work as expected...");
-                        builder.setCancelable(true);
-
-                        builder.setPositiveButton(
-                                "Ok",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        builder.setNegativeButton(
-                                "Close",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        AlertDialog alert11 = builder.create();
-                        alert11.show();
-
+                       AlertDialogFun("The call didn't work as expcted...");
                     } else{
                         tmp = response.body();
 
@@ -159,28 +139,7 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
                 @Override
                 public void onFailure(Call<ListProducts> call, Throwable t) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage("The call failed! "+t.toString());
-                    builder.setCancelable(true);
-
-                    builder.setPositiveButton(
-                            "Ok",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                    builder.setNegativeButton(
-                            "Close",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                    AlertDialog alert11 = builder.create();
-                    alert11.show();
+                  AlertDialogFun("The call has failed..."+t.toString());
 
                 }
             });
@@ -194,21 +153,15 @@ public class Products extends AppCompatActivity implements ProductInterface {
         sessionToken = myData;
 
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+
 
     @Override
     public void postRank(float rank, String idProd) {
-
         try {
             Map<String, Object> postData = new HashMap<>();
             postData.put("token", sessionToken);
             postData.put("rating", rank);
             postData.put("productId", idProd);
-
-            Log.d("palla", "sto per essere impachettato: " + postData);
 
             Call<Product> call = lam_api.postPreference("Bearer " + received_token, postData);
             call.enqueue(new Callback<Product>() {
@@ -216,9 +169,6 @@ public class Products extends AppCompatActivity implements ProductInterface {
                 public void onResponse(Call<Product> call, Response<Product> response) {
                     if (!response.isSuccessful()){
                         AlertDialogFun("The call didn't work as expected..."+response.toString());
-
-                        Log.d("palla", "nope rating nn ha funzionato");
-                        Log.d("palla", response.toString());
                         return;
                     }
 
@@ -239,9 +189,6 @@ public class Products extends AppCompatActivity implements ProductInterface {
 
     @Override
     public boolean deleteProduct(String idProd, String idUser) {
-
-        Log.d("diamond2", "sono di products " +userId);
-        Log.d("diamond2", "sono stato  passato " + idUser);
         if (idUser.equals(userId)){
             try{
                 Call<Product> call = lam_api.deleteProduct("Bearer " + received_token, idProd);

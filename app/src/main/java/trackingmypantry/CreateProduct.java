@@ -67,7 +67,7 @@ public class CreateProduct extends AppCompatActivity  {
     private String received_barcode;
     private String received_classfrom;
     private Button takephotobutton;
-    private Button viewProducts, viewPantry;
+    private Button viewPantry;
     private LAM_Api lam_api;
     private ImageView imageView;
     private EditText dateprod;
@@ -101,7 +101,7 @@ public class CreateProduct extends AppCompatActivity  {
         savelocallybutton = findViewById(R.id.savelocally);
         
         viewPantry = findViewById(R.id.viewpantry);
-        viewProducts = findViewById(R.id.viewproducts);
+
 
 
 
@@ -173,14 +173,12 @@ public class CreateProduct extends AppCompatActivity  {
         });
         
         viewPantry.setOnClickListener(v->{
-            LocalProducts();
+            Pantry();
         });
         
-        viewProducts.setOnClickListener(v->{
-            viewProductsList();
-        });
 
     }
+
 
     private String encodeImage(Bitmap bm) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -221,8 +219,11 @@ public class CreateProduct extends AppCompatActivity  {
                     public void onResponse(Call<Product> call, Response<Product> response) {
                         if (!response.isSuccessful()) {
                             return;
+                        }else{
+                            AlertDialogFun("Product has been added!");
+
                         }
-                        AlertDialogFun("Product has been added!");
+
                         
                     }
 
@@ -258,19 +259,13 @@ public class CreateProduct extends AppCompatActivity  {
         return (Context)this;
     }
 
-    private void LocalProducts(){
-        Intent LocalDb = new Intent(this, LocalDBProducts.class);
-        startActivity(LocalDb);
+    private void Pantry(){
+        Intent pantry = new Intent(this, Pantry.class);
+        startActivity(pantry);
     }
     
-    private void viewProductsList(){
-        Intent Prods = new Intent(this, Products.class);
-        startActivity(Prods);
-    }
 
     private void saveDBProduct(){
-        String tmpimg = null;
-
         DBHelper dbh = new DBHelper(getApplicationContext());
         if (nametext.getText().toString().equals("") &&  descriptiontext.getText().toString().equals("")
         && encodedImage == null){

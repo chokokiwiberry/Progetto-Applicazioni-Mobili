@@ -88,11 +88,11 @@ public class Login extends AppCompatActivity {
 
                     if (!response.isSuccessful()) {
                         if (response.code() == 401) {
+                            Toast.makeText(Login.this, "Wrong email or password!", Toast.LENGTH_LONG).show();
                            return;
                         }
                     } else{
 
-                        userlogged.setToken(response.body().getToken());
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("token", response.body().getToken());
@@ -105,7 +105,6 @@ public class Login extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    Log.d("diamond4", "haifalato");
                 }
 
             });

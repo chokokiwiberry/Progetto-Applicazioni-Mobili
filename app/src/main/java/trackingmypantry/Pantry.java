@@ -1,9 +1,12 @@
 package trackingmypantry;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +34,8 @@ public class Pantry extends AppCompatActivity {
     private String passed_Token = "";
 
     private String received_token = "";
+    private String prefToken;
+
 
     private String received_userId ="";
 
@@ -57,30 +62,31 @@ public class Pantry extends AppCompatActivity {
 
         getButton.setOnClickListener(v -> {
             Bundle extras = getIntent().getExtras();
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            prefToken = preferences.getString("token", "");
+
             if (extras != null) {
-                Log.d("diamond4", "sono token: "+received_token);
                 received_token = extras.getString("token");
-                if (barcode_input.getText().toString().equals("")){
+                passed_Token = received_token;
+            }
+            else if (!prefToken.isEmpty()) {
+               passed_Token = prefToken;
+            }
+            if (barcode_input.getText().toString().equals("")){
                     barcode = scannedbarcode;
-                }else{
+            }else{
                     barcode = barcode_input.getText().toString();
                 }
                 Intent Products = new Intent(this, Products.class);
                 Products.putExtra("barcode", barcode);
-                Products.putExtra("token", received_token);//per poter inviare questi dati all'altra activity
+                Products.putExtra("token", passed_Token);
                 startActivity(Products);
-            } else{
-                Login();
-            }
-
-
         });
 
 
         localpantryButton.setOnClickListener(v ->{
             Intent LocalDb = new Intent(this, LocalDBProducts.class);
             startActivity(LocalDb);
-
         });
 
         scanBarcode.setOnClickListener(v-> {
@@ -110,5 +116,7 @@ public class Pantry extends AppCompatActivity {
             barcodeLauncher.launch(new ScanOptions());
         }
     }
-
+    public Context getContext() {
+        return (Context)this;
+    }
 }

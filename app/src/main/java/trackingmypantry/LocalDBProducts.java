@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -79,14 +80,10 @@ public class LocalDBProducts extends AppCompatActivity implements ProductInterfa
     }
 
     private void searchProduct() {
-        Log.d("niente", "tanto per");
         tmp = dbh.getProds(searchproduct_text.getText().toString());
         if (tmp == null) {
-            Log.d("niente", "fai schifo");
+            Toast.makeText(this, "No products found", Toast.LENGTH_LONG).show();
         } else {
-            for (int i = 0; i < tmp.size(); i++) {
-                Log.d("niente", tmp.get(i).getName());
-            }
             productDBView.setProducts_array(tmp);
             listview.setAdapter(productDBView);
         }
@@ -99,8 +96,7 @@ public class LocalDBProducts extends AppCompatActivity implements ProductInterfa
     }
 
     public void saveLocalProduct(String name, String description, String image, String date){
-        Log.d("miao", "sono localSave");
-        //dbh.insertNewProduct(name, description, image, date);
+
     }
 
 
