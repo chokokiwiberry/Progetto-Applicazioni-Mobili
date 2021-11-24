@@ -1,4 +1,4 @@
-package trackingmypantry;
+0package trackingmypantry;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -35,8 +35,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 //Logica per chiamate GET
 //Logica per chiamata POSTPREFERENCE
-//Logica per SAVE DEL SINGOLO PRODOTTO
-public class Products extends AppCompatActivity implements ProductInterface {
+//Logica per SAVE DEL 0000000000000000000SINGOLO PRODOTTO
+public class Products e00xtends AppCompatActivity implements ProductInterface {
     private LAM_Api lam_api;
 
     private String passed_Barcode; // barcode passato dal pantry, digitato dall'utente
